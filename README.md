@@ -14,21 +14,20 @@
 
 - **Flashcards Section**:  
   A valuable learning tool for memorizing vocabulary and solving quantitative problems. This section allows users to study GRE-related vocabulary through flashcards and simultaneously work on quant questions, reinforcing both areas of study.
- 
 
 - **GRE Simulation Tests**:  
   Prepwise offers full-length practice tests that simulate the real GRE exam environment. These tests are designed to give users a sense of the timing and structure of the actual exam. For premium users, we provide detailed **score analysis**, offering insights into their potential GRE scores and suggestions for areas that need improvement.
 
 ### Premium User Features:
+
 - **Score Analysis**:  
   Premium users gain access to in-depth score analysis after completing practice tests. This feature provides a breakdown of performance in each section, predicts final GRE scores, and offers tailored recommendations for improving weak areas.
 
 ### Tech Stack:
 
-- **Frontend**: ReactJS – A powerful JavaScript library for building user interfaces, ensuring a        responsive and dynamic experience for users.
+- **Frontend**: ReactJS – A powerful JavaScript library for building user interfaces, ensuring a responsive and dynamic experience for users.
 - **Backend**: NodeJS/Express – A JavaScript runtime for building scalable and fast backend services.
 - **Database**: MongoDB – A NoSQL database that allows for flexible data storage and quick retrieval of user data, practice questions, and test results.
-
 
 ```mermaid
 classDiagram
@@ -41,11 +40,11 @@ classDiagram
         -string email
         -integer mobileNum
         -bool isPremium
-        
+
         +takeFullTest()
         +useFlashcard()
         +upgradeToPremium()
-        +accessAnalytics() 
+        +accessAnalytics()
         +viewProfile()
         +getUserID() : int
         +setUserID(id:int)
@@ -61,7 +60,7 @@ classDiagram
         +setEmail(email:string)
         +getMobile() : int
         +setMobile(id:int)
-        
+
     }
 
     class Admin {
@@ -143,8 +142,12 @@ classDiagram
         +setPaymentStatus(status:string)
     }
 
-    class DataAnalytics {
+    class Progress {
         +int analyticsID
+        +int userId
+        +int correctAnswers
+        +float averageTimePerQuestion
+        +string[] weakTopics
         +string userData
         +float averageScore
         +generateReport(userID:int)
@@ -156,6 +159,11 @@ classDiagram
         +setAverageScore(score:float)
         +getInsights() : string
         +setInsights(insight:string)
+        +getWeakTopics() : string[]
+        +setWeakTopics(weakTopics: string[])
+        +setAverageTimePerQuestion(averageTimePerQuestion : float)
+        +getAverageTimePerQuestion(): float
+
     }
 
     class Question {
@@ -183,8 +191,8 @@ classDiagram
     Question --> Flashcard
     Test o-- Question
     User --> Payment
-    User ..> DataAnalytics
-    Payment --> DataAnalytics
-    Test --> DataAnalytics
+    User ..> Progress
+    Payment --> Progress
+    Test --> Progress
 
 ```
