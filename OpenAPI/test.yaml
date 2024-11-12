@@ -1,7 +1,7 @@
 openapi: 3.0.0
 info:
-  title: Test API
-  description: REST APIs for managing questions for tests
+  title: GRE Test Management API
+  description: REST APIs for managing GRE tests, including questions for both Quantitative and Verbal sections with difficulty levels
   version: '1.0'
 
 servers:
@@ -9,10 +9,10 @@ servers:
     description: Local development environment
 
 paths:
-  /questions:
+  /tests:
     get:
-      operationId: get-questions
-      summary: Retrieve a list of questions
+      operationId: get-tests
+      summary: Retrieve a list of tests
       responses:
         '200':
           description: Successful response
@@ -21,64 +21,97 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: "#/components/schemas/Question"
+                  $ref: "#/components/schemas/Test"
               example:
-                - id: "1"
-                  questionText: " If x = 3, what is the value of 2x + 5?"
-                  options: ["11", "7", "9", "10"]
-                  correctOption: "11"
-                  difficultyLevel: "EASY"
-                  section: "Quantitative"
-                - id: "2"
-                  questionText: "A car travels 60 miles in 1 hour. How long will it take to travel 180 miles at the same speed?"
-                  options: ["2 hours", "3 hours", "4 hours", "5 hours"]
-                  correctOption: "3 hours"
-                  difficultyLevel: "MEDIUM"
-                  section: "Quantitative"
-                - id: "3"
-                  questionText: "A rectangle has a length of 4x + 5 and a width of 3x - 2. If the area of the rectangle is 60 square units, what is the value of x?"
-                  options: ["2", "3", "4", "5"]
-                  correctOption: "3"
-                  difficultyLevel: "HARD"
-                  section: "Quantitative"
-                - id: "4"
-                  questionText: "Which of the following words is closest in meaning to happy?"
-                  options: ["Joyful", "Sad", "Angry", "Bored"]
-                  correctOption: "Joyful"
-                  difficultyLevel: "EASY"
-                  section: "Verbal"
-                - id: "5"
-                  questionText: "Choose the word that best completes the analogy: 'Glove is to hand as shoe is to __________.'"
-                  options: ["foot", "leg", "toe", "ankle"]
-                  correctOption: "foot"
-                  difficultyLevel: "MEDIUM"
-                  section: "Verbal"
-                - id: "6"
-                  questionText: "Choose the most appropriate word to complete the sentence: 'Despite the __________ nature of the problem, the team was able to reach a solution.'"
-                  options: ["complex", "simple", "easy", "straightforward"]
-                  correctOption: "complex"
-                  difficultyLevel: "HARD"
-                  section: "Verbal"
+                - testID: 1
+                  testName: "GRE Practice Test 1"
+                  description: "A sample GRE practice test"
+                  sections:
+                    - section: "QUANT"
+                      questions:
+                        - questionID: 101
+                          questionText: "What is 5 + 3?"
+                          options: ["6", "7", "8", "9"]
+                          correctOption: "8"
+                          difficultyLevel: "EASY"
+                        - questionID: 102
+                          questionText: "If x + 3 = 7, what is x?"
+                          options: ["1", "2", "3", "4"]
+                          correctOption: "4"
+                          difficultyLevel: "MEDIUM"
+                        - questionID: 103
+                          questionText: "Solve for x: 2x - 5 = 15"
+                          options: ["8", "10", "12", "15"]
+                          correctOption: "10"
+                          difficultyLevel: "HARD"
+                    - section: "VERBAL"
+                      questions:
+                        - questionID: 201
+                          questionText: "Which of the following words is closest in meaning to 'happy'?"
+                          options: ["Sad", "Joyful", "Angry", "Depressed"]
+                          correctOption: "Joyful"
+                          difficultyLevel: "EASY"
+                        - questionID: 202
+                          questionText: "Select the best antonym for 'difficult'."
+                          options: ["Hard", "Easy", "Challenging", "Complex"]
+                          correctOption: "Easy"
+                          difficultyLevel: "MEDIUM"
+                        - questionID: 203
+                          questionText: "Which word most nearly means 'ephemeral'?"
+                          options: ["Permanent", "Eternal", "Temporary", "Lasting"]
+                          correctOption: "Temporary"
+                          difficultyLevel: "HARD"
     post:
-      operationId: create-question
-      summary: Create a new question
+      operationId: create-test
+      summary: Create a new test
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/Question"
+              $ref: "#/components/schemas/Test"
             example:
-              id: "7"
-              questionText: "Which of the following best describes the tone of the passage below?
-              'The author’s criticism of the government’s recent policies was sharp and incisive, emphasizing its failure to address the key issues'"
-              options: ["Supportive", "Critical", "Neutral", "Pessimistic"]
-              correctOption: "Critical"
-              difficultyLevel: "Hard"
-              section: "Verbal"
+              testID: 2
+              testName: "GRE Practice Test 2"
+              description: "Another sample GRE practice test"
+              sections:
+                - section: "QUANT"
+                  questions:
+                    - questionID: 301
+                      questionText: "What is 9 + 1?"
+                      options: ["10", "11", "12", "9"]
+                      correctOption: "10"
+                      difficultyLevel: "EASY"
+                    - questionID: 302
+                      questionText: "If 2x = 14, what is x?"
+                      options: ["5", "6", "7", "8"]
+                      correctOption: "7"
+                      difficultyLevel: "MEDIUM"
+                    - questionID: 303
+                      questionText: "Solve for y: 3y + 6 = 21"
+                      options: ["3", "4", "5", "6"]
+                      correctOption: "5"
+                      difficultyLevel: "HARD"
+                - section: "VERBAL"
+                  questions:
+                    - questionID: 401
+                      questionText: "What is the opposite of 'hot'?"
+                      options: ["Cold", "Warm", "Cool", "Lukewarm"]
+                      correctOption: "Cold"
+                      difficultyLevel: "EASY"
+                    - questionID: 402
+                      questionText: "Which word is the closest synonym for 'meticulous'?"
+                      options: ["Careless", "Precise", "Lazy", "Rushed"]
+                      correctOption: "Precise"
+                      difficultyLevel: "MEDIUM"
+                    - questionID: 403
+                      questionText: "Which word most nearly means 'capricious'?"
+                      options: ["Predictable", "Steady", "Unpredictable", "Consistent"]
+                      correctOption: "Unpredictable"
+                      difficultyLevel: "HARD"
       responses:
         '201':
-          description: Question created successfully
+          description: Test created successfully
         '400':
           description: Bad request
           content:
@@ -92,139 +125,135 @@ paths:
               schema:
                 $ref: "#/components/schemas/Error"
 
-  /questions/{id}:
+  /tests/{testID}:
     get:
-      operationId: get-question
-      summary: Retrieve a single question by ID
+      operationId: get-test
+      summary: Retrieve a single test by ID
       parameters:
-        - name: id
+        - name: testID
           in: path
           required: true
           schema:
-            type: string
+            type: integer
       responses:
         '200':
           description: Successful response
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/Question"
+                $ref: "#/components/schemas/Test"
               example:
-                  id: "4"
-                  questionText: "Which of the following words is closest in meaning to happy?"
-                  options: ["Joyful", "Sad", "Angry", "Bored"]
-                  correctOption: "Joyful"
-                  difficultyLevel: "EASY"
-                  section: "Verbal"
-        '404':
-          description: Question not found
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
-        '500':
-          description: Server error
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
-
+                testID: 1
+                testName: "GRE Practice Test 1"
+                description: "A sample GRE practice test"
+                sections:
+                  - section: "QUANT"
+                    questions:
+                      - questionID: 101
+                        questionText: "What is 5 + 3?"
+                        options: ["6", "7", "8", "9"]
+                        correctOption: "8"
+                        difficultyLevel: "EASY"
+                  - section: "VERBAL"
+                    questions:
+                      - questionID: 201
+                        questionText: "Which of the following words is closest in meaning to 'happy'?"
+                        options: ["Sad", "Joyful", "Angry", "Depressed"]
+                        correctOption: "Joyful"
+                        difficultyLevel: "EASY"
     put:
-      operationId: update-question
-      summary: Update an existing question
+      operationId: update-test
+      summary: Update an existing test
       parameters:
-        - name: id
+        - name: testID
           in: path
           required: true
           schema:
-            type: string
+            type: integer
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/Question"
+              $ref: "#/components/schemas/Test"
             example:
-              id: "4"
-              questionText: "Which of the following words is closest in meaning to sorrowful?"
-              options: ["Joyful", "Sad", "Angry", "Bored"]
-              correctOption: "sad"
-              difficultyLevel: "EASY"
-              section: "Verbal"
+              testName: "Updated GRE Practice Test 1"
+              description: "Updated description"
+              sections:
+                - section: "QUANT"
+                  questions:
+                    - questionID: 101
+                      questionText: "Updated Quant Question"
+                      options: ["1", "2", "3", "4"]
+                      correctOption: "4"
+                      difficultyLevel: "EASY"
       responses:
         '200':
-          description: Question updated successfully
+          description: Test updated successfully
         '400':
           description: Bad request
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
         '404':
-          description: Question not found
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
+          description: Test not found
         '500':
           description: Server error
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
 
     delete:
-      operationId: delete-question
-      summary: Delete a question by ID
+      operationId: delete-test
+      summary: Delete a test by ID
       parameters:
-        - name: id
+        - name: testID
           in: path
           required: true
           schema:
-            type: string
+            type: integer
       responses:
         '204':
-          description: Question deleted successfully
+          description: Test deleted successfully
         '404':
-          description: Question not found
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
+          description: Test not found
         '500':
           description: Server error
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
 
- 
 components:
   schemas:
-    Question:
+    Test:
       type: object
       properties:
-        id:
+        testID:
+          type: integer
+        testName:
           type: string
-        questionText:
+        description:
           type: string
-        options:
+        sections:
           type: array
           items:
-            type: string
-        correctOption:
-          type: string
-        difficultyLevel:
-          type: string
-          enum: [EASY, MEDIUM, HARD]
-        section:
-          type: string
-          enum: [Quantitative, Verbal]
+            type: object
+            properties:
+              section:
+                type: string
+              questions:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    questionID:
+                      type: integer
+                    questionText:
+                      type: string
+                    options:
+                      type: array
+                      items:
+                        type: string
+                    correctOption:
+                      type: string
+                    difficultyLevel:
+                      type: string
 
     Error:
       type: object
       properties:
         code:
-          type: string
+          type: integer
         message:
           type: string
