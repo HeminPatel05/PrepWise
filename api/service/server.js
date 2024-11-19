@@ -11,5 +11,5 @@ const port = process.env.PORT;
 initialize(app);
 
 app.listen(port, () => {
-  console.log(port);
+  console.log(`connected to PORT: ${port}`);
 });
