@@ -11,9 +11,11 @@ export const postSession = async (req, res) => {
     const session = await sessionService(newSession);
     res.status(200).json(session);
   } catch (error) {
-    res
-      .status(500)
-      .json({ error: "An error occurred while creating the session." });
+    console.error("Error creating session:", error);
+    res.status(500).json({
+      code: "500",
+      message: "An error occurred while creating the session.",
+    });
   }
 };
 
@@ -25,7 +27,10 @@ export const getSessionController = async (req, res) => {
 
     // Check if user_id is provided
     if (!user_id) {
-      return res.status(400).json({ error: "user_id is required" });
+      return res.status(400).json({
+        code: "400",
+        message: "user_id is required",
+      });
     }
 
     // Call the service function to get sessions with optional filters
@@ -33,16 +38,20 @@ export const getSessionController = async (req, res) => {
 
     // Check if no sessions were found
     if (sessions.length === 0) {
-      return res.status(404).json({ error: "No sessions found for this user" });
+      return res.status(404).json({
+        code: "404",
+        message: "No sessions found for this user",
+      });
     }
 
     // Return the retrieved sessions
     return res.status(200).json(sessions);
   } catch (error) {
-    console.error("Error retrieving sessions:", error.message);
-    return res
-      .status(500)
-      .json({ error: "An error occurred while retrieving sessions." });
+    console.error("Error retrieving sessions:", error);
+    return res.status(500).json({
+      code: "500",
+      message: "An error occurred while retrieving sessions.",
+    });
   }
 };
 
@@ -58,22 +67,29 @@ export const updateSession = async (req, res) => {
 
     // If no session is found, return a 404 error
     if (!updatedSession) {
-      return res.status(404).json({ error: "Session not found" });
+      return res.status(404).json({
+        code: "404",
+        message: "Session not found",
+      });
     }
 
     // Return the updated session
     return res.status(200).json(updatedSession);
   } catch (error) {
-    console.error("Error updating session:", error.message);
+    console.error("Error updating session:", error);
 
     // Handle validation errors or other bad input cases
     if (error.name === "ValidationError") {
-      return res.status(400).json({ error: "Invalid input data" });
+      return res.status(400).json({
+        code: "400",
+        message: "Invalid input data",
+      });
     }
 
     // Handle internal server errors
-    return res
-      .status(500)
-      .json({ error: "An error occurred while updating the session." });
+    return res.status(500).json({
+      code: "500",
+      message: "An error occurred while updating the session.",
+    });
   }
 };
