@@ -184,5 +184,3 @@ $RECYCLE.BIN/
 
 # Ignore the dist directory
 dist/
-node_modules
-.env
