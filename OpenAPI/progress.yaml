@@ -39,6 +39,35 @@ paths:
               schema:
                 $ref: "#/components/schemas/Error"
 
+    post:
+      summary: create a summary
+      description: Create a summary for a user.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ProgressSummary"
+      responses:
+        "201":
+          description: Session created successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ProgressSummary"
+        "400":
+          description: Invalid input data
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "500":
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+
     put:
       summary: Update user progress summary
       description: Update the user’s progress summary data.
