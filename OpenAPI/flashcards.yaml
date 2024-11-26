@@ -1,0 +1,165 @@
+openapi: 3.0.0
+info:
+  title: Flashcards API
+  description: A REST API for managing flashcards in a Magoosh clone application
+  version: 1.0.0
+
+servers:
+  - url: http://localhost:3000
+    description: Local server
+
+paths:
+  /flashcards:
+    get:
+      summary: Get all flashcards
+      responses:
+        200:
+          description: A list of flashcards
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Flashcard'
+              examples:
+                verbalExample:
+                  summary: Example of a verbal flashcard
+                  value:
+                    - id: "1"
+                      section: "verbal"
+                      type: "sentence_completion"
+                      question: "Complete the sentence: 'The quick brown ___ jumps over the lazy dog.'"
+                      options: ["cat", "dog", "fox", "lion"]
+                      answer: "fox"
+                      explanation: "The word 'fox' completes the popular pangram sentence."
+                quantExample:
+                  summary: Example of a quant flashcard
+                  value:
+                    - id: "2"
+                      section: "quant"
+                      type: "math_problem"
+                      question: "If a car travels 60 miles per hour, how far will it travel in 3 hours?"
+                      options: ["120 miles", "180 miles", "200 miles", "240 miles"]
+                      answer: "180 miles"
+                      explanation: "Distance = Speed × Time, so 60 miles/hour × 3 hours = 180 miles."
+    post:
+      summary: Create a new flashcard
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Flashcard'
+            examples:
+              createExample:
+                summary: Example of creating a flashcard
+                value:
+                  section: "quant"
+                  type: "math_problem"
+                  question: "If a car travels 60 miles per hour, how far will it travel in 3 hours?"
+                  options: ["120 miles", "180 miles", "200 miles", "240 miles"]
+                  answer: "180 miles"
+                  explanation: "Distance = Speed × Time, so 60 miles/hour × 3 hours = 180 miles."
+      responses:
+        201:
+          description: Flashcard created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Flashcard'
+
+  /flashcards/{id}:
+    get:
+      summary: Get a flashcard by ID
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: Flashcard details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Flashcard'
+        404:
+          description: Flashcard not found
+    put:
+      summary: Update a flashcard by ID
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Flashcard'
+      responses:
+        200:
+          description: Flashcard updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Flashcard'
+        404:
+          description: Flashcard not found
+    delete:
+      summary: Delete a flashcard by ID
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+      responses:
+        204:
+          description: Flashcard deleted successfully
+        404:
+          description: Flashcard not found
+
+components:
+  schemas:
+    Flashcard:
+      type: object
+      required:
+        - section
+        - type
+        - question
+        - options
+        - answer
+      properties:
+        id:
+          type: string
+          description: Unique identifier for the flashcard
+        section:
+          type: string
+          description: Section type, either "verbal" or "quant"
+          example: "quant"
+        type:
+          type: string
+          description: Type of the flashcard question
+          example: "math_problem"
+        question:
+          type: string
+          description: The flashcard question
+          example: "If a car travels 60 miles per hour, how far will it travel in 3 hours?"
+        options:
+          type: array
+          items:
+            type: string
+          description: List of answer options
+          example: ["120 miles", "180 miles", "200 miles", "240 miles"]
+        answer:
+          type: string
+          description: The correct answer to the question
+          example: "180 miles"
+        explanation:
+          type: string
+          description: Explanation for the answer
+          example: "Distance = Speed × Time, so 60 miles/hour × 3 hours = 180 miles."

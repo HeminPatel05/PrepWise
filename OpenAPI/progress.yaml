@@ -1,0 +1,269 @@
+openapi: 3.0.1
+info:
+  title: PrepWise - Progress Tracking API
+  description: API to track and manage user progress, session performance, and progress summaries for GRE preparation.
+  version: 1.0.0
+servers:
+  - url: http://localhost:8080
+    description: local development environment
+
+paths:
+  /progress/summary:
+    get:
+      summary: Get user progress summary
+      description: Retrieve a summary of the user’s progress, including accuracy, topic mastery, average time, and weak areas.
+      parameters:
+        - name: user_id
+          in: query
+          required: true
+          schema:
+            type: string
+            description: The unique ID of the user
+      responses:
+        "200":
+          description: Progress summary retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ProgressSummary"
+        "404":
+          description: User not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "500":
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+
+    put:
+      summary: Update user progress summary
+      description: Update the user’s progress summary data.
+      parameters:
+        - name: user_id
+          in: query
+          required: true
+          schema:
+            type: string
+            description: The unique ID of the user
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ProgressSummary"
+      responses:
+        "200":
+          description: Progress summary updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ProgressSummary"
+        "400":
+          description: Invalid input data
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "404":
+          description: User not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "500":
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+
+  /progress/sessions:
+    get:
+      summary: Retrieve all sessions
+      description: Get a list of study sessions/attempts for the user.
+      parameters:
+        - name: user_id
+          in: query
+          required: true
+          schema:
+            type: string
+            description: The unique ID of the user
+        - name: section
+          in: query
+          schema:
+            type: string
+            enum: [Verbal, Quantitative]
+            description: Optional filter by section
+        - name: date_range
+          in: query
+          schema:
+            type: string
+            description: Optional date range filter
+      responses:
+        "200":
+          description: List of sessions retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Session"
+        "404":
+          description: User not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "500":
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+
+    post:
+      summary: Add a new session
+      description: Create a new study session entry for a user.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Session"
+      responses:
+        "201":
+          description: Session created successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Session"
+        "400":
+          description: Invalid input data
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "500":
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+
+  /progress/sessions/{session_id}:
+    put:
+      summary: Update a session
+      description: Update the details of an existing study session.
+      parameters:
+        - name: session_id
+          in: path
+          required: true
+          schema:
+            type: string
+            description: The ID of the session to update
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Session"
+      responses:
+        "200":
+          description: Session updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Session"
+        "400":
+          description: Invalid input data
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "404":
+          description: Session not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "500":
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+
+components:
+  schemas:
+    ProgressSummary:
+      type: object
+      properties:
+        user_id:
+          type: string
+          description: The unique identifier for the user
+        total_questions_answered:
+          type: integer
+          description: Total number of questions answered by the user
+        correct_answers:
+          type: integer
+          description: Number of questions answered correctly by the user
+        accuracy:
+          type: number
+          format: float
+          description: Percentage accuracy of the user’s answers
+        average_time_per_question:
+          type: number
+          format: float
+          description: Average time spent per question in seconds
+        topics_weakness:
+          type: array
+          items:
+            type: string
+          description: List of topics identified as weak areas
+
+    Session:
+      type: object
+      required:
+        - session_id
+        - user_id
+        - section
+        - date
+        - duration
+        - topics_covered
+      properties:
+        session_id:
+          type: string
+          description: Unique identifier for the session
+        user_id:
+          type: string
+          description: The unique ID of the user
+        section:
+          type: string
+          description: The section of the GRE studied (Verbal or Quantitative)
+          enum: [Verbal, Quantitative]
+        date:
+          type: string
+          format: date-time
+          description: The date and time of the session
+        duration:
+          type: integer
+          description: Duration of the session in minutes
+        topics_covered:
+          type: array
+          items:
+            type: string
+          description: List of topics covered in the session
+
+    Error:
+      type: object
+      properties:
+        code:
+          type: string
+          description: Error code
+        message:
+          type: string
+          description: Detailed error message

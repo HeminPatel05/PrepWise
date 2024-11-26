@@ -1,0 +1,196 @@
+openapi: 3.1.0
+info:
+  title: User Registration API
+  description: API for managing user registration
+  version: 1.0.0
+servers:
+  - url: http://localhost:8080/api
+    description: Local development environment
+
+paths:
+  /users:
+    get:
+      operationId: search-users
+      summary: Get a list of registered users
+      responses:
+        '200':
+          description: A list of registered users
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/RegisteredUser'
+        400:
+          description: Authentication Error
+          content: 
+            "application/json":
+              schema:
+                type: object
+                $ref: "/#/components/schemas/Error"
+        500:
+          description: Internal Server Error
+          content: 
+            "application/json":
+              schema:
+                type: object
+                $ref: "/#/components/schemas/Error"
+    post:
+      operationId: register-users
+      summary: Register a new user
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RegisteredUser'
+      responses:
+        '200':
+          description: User already Exists
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RegisteredUser'
+        400:
+          description: Authentication Error
+          content: 
+            "application/json":
+              schema:
+                type: object
+                $ref: "/#/components/schemas/Error"
+        500:
+          description: Internal Server Error
+          content: 
+            "application/json":
+              schema:
+                type: object
+                $ref: "/#/components/schemas/Error"
+
+  /users/{userId}:
+    get:
+      summary: Get a registered user by ID
+      parameters:
+        - in: path
+          name: userId
+          required: true
+          schema:
+            type: string
+          description: Unique ID of the user
+      responses:
+        '200':
+          description: Registered user details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RegisteredUser'
+        400:
+          description: User invalid
+          content: 
+            "application/json":
+              schema:
+                type: object
+                $ref: "/#/components/schemas/Error"
+        500:
+          description: Internal Server Error
+          content: 
+            "application/json":
+              schema:
+                type: object
+                $ref: "/#/components/schemas/Error"
+    put:
+      summary: Update user information
+      parameters:
+        - in: path
+          name: userId
+          required: true
+          schema:
+            type: string
+          description: Unique ID of the user
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RegisteredUser'
+      responses:
+        400:
+          description: Authentication Error
+          content: 
+            "application/json":
+              schema:
+                type: object
+                $ref: "/#/components/schemas/Error"
+        500:
+          description: Internal Server Error
+          content: 
+            "application/json":
+              schema:
+                type: object
+                $ref: "/#/components/schemas/Error"
+
+    delete:
+      summary: Delete a registered user
+      parameters:
+        - in: path
+          name: userId
+          required: true
+          schema:
+            type: string
+          description: Unique ID of the user
+      responses:
+        '204':
+          description: User deleted successfully
+        400:
+          description: user does not exists
+          content: 
+            "application/json":
+              schema:
+                type: object
+                $ref: "/#/components/schemas/Error"
+        500:
+          description: Internal Server Error
+          content: 
+            "application/json":
+              schema:
+                type: object
+                $ref: "/#/components/schemas/Error"
+
+components:
+  schemas:
+    RegisteredUser:
+      type: object
+      properties:
+        firstName:
+          type: string
+          description: User's first name
+        lastName:
+          type: string
+          description: User's last name
+        email:
+          type: string
+          description: User's email address
+        mobile_Num:
+          type: integer
+          description: User's mobile number
+        password:
+          type: string
+          description: User's password (hashed)
+        conf_password:
+          type: string
+          description: User's confirmed password (hashed)
+        premium_User:
+          type: boolean
+          description: Indicates if the user is a premium user (e.g., "yes" or "no")
+    Error:
+      type: object
+      properties: 
+        code:
+          type: string
+        message:
+          type: string
+      required:
+        - firstName
+        - lastName
+        - email
+        - mobileNum
+        - password
