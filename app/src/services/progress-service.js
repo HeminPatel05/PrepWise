@@ -2,7 +2,7 @@ import dotenv from "dotenv";
 
 // dotenv.config();
 
-const base = `http://localhost:3002/progress`;
+const base = `http://localhost:3000/progress`;
 
 // export const getSummary = async (user_id) => {
 //   const response = await fetch(`${base}/summary?user_id=${user_id}`, {

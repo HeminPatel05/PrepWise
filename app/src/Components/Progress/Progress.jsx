@@ -12,7 +12,7 @@ import SessionListComponent from "./SessionListComponent.jsx";
 
 const Progress = () => {
   const [timeToAns, setTimeToAns] = useState(0);
-  const [username, setUsername] = useState("user123");
+  const [username, setUsername] = useState("HeminPatel");
   const [quesionAttempted, setQuesionAttempted] = useState(50);
   const [correctAns, setCorrectAns] = useState(50);
   const [accuracy, setAccuracy] = useState(50);
