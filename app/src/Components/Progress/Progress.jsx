@@ -6,7 +6,7 @@ import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box"; // Import Box for layout
-import { getSummary, getSessions } from "../services/progress-service";
+import { getSummary, getSessions } from "../../services/progress-service.js";
 import WeakTopicComponet from "./WeakTopicComponet.jsx";
 import SessionListComponent from "./SessionListComponent.jsx";
 

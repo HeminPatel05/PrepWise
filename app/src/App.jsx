@@ -1,5 +1,5 @@
 import "./App.css";
-import Progress from "./pages/Progress.jsx";
+import Progress from "./Components/Progress/Progress";
 
 function App() {
   return (
