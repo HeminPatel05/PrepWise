@@ -1,0 +1,15 @@
+meta {
+  name: Get a registered user by ID
+  type: http
+  seq: 3
+}
+
+get {
+  url: http://localhost:8080/api/users/:userId
+  body: none
+  auth: none
+}
+
+params:path {
+  userId: 674617097d6e7c673de0e2b4
+}
