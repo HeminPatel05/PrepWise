@@ -1,19 +1,21 @@
-const Flashcard = require("../models/flashcard.js");
+import Flashcard from "../models/flashcard.js";
 
 // Service to retrieve all flashcards, with optional filtering
-exports.getAllFlashcards = async (filter = {}) => {
+export const getAllFlashcards = async (filter = {}) => {
   return await Flashcard.find(filter); // Apply the filter if provided
 };
 
 // Service to retrieve a flashcard by ID
-exports.getFlashcardById = async (id) => {
+export const getFlashcardById = async (id) => {
   return await Flashcard.findById(id);
 };
 
 // Service to create a new flashcard
-exports.createFlashcard = async (flashcardData) => {
+export const createFlashcard = async (flashcardData) => {
   // Check if a flashcard with the same question already exists
-  const existingFlashcard = await Flashcard.findOne({ question: flashcardData.question });
+  const existingFlashcard = await Flashcard.findOne({
+    question: flashcardData.question,
+  });
   if (existingFlashcard) {
     throw new Error("A flashcard with this question already exists.");
   }
@@ -24,7 +26,7 @@ exports.createFlashcard = async (flashcardData) => {
 };
 
 // Service to update a flashcard by ID
-exports.updateFlashcard = async (id, updateData) => {
+export const updateFlashcard = async (id, updateData) => {
   // Update the flashcard and return the updated document
   return await Flashcard.findByIdAndUpdate(id, updateData, {
     new: true, // Return the updated document
@@ -32,8 +34,4 @@ exports.updateFlashcard = async (id, updateData) => {
   });
 };
 
-// Service to delete a flashcard by ID
-exports.deleteFlashcard = async (id) => {
-  // Delete the flashcard and return the deleted document
-  return await Flashcard.findByIdAndDelete(id);
-};
+// Service to delete

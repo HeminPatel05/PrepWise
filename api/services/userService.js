@@ -1,4 +1,4 @@
-import User from '../models/user.js';
+import User from "../models/user.js";
 
 export const getAllUsers = async () => {
   return await User.find();
@@ -11,7 +11,7 @@ export const getUserById = async (id) => {
 export const createUser = async (userData) => {
   const existingUser = await User.findOne({ email: userData.email });
   if (existingUser) {
-    throw new Error('User already exists');
+    throw new Error("User already exists");
   }
   const user = new User(userData);
   return await user.save();

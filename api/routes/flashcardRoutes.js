@@ -1,11 +1,11 @@
-const express = require("express");
-const {
+import express from "express";
+import {
   getAllFlashcards,
   getFlashcardById,
   createFlashcard,
   updateFlashcard,
   deleteFlashcard,
-} = require("../controllers/flashcardController.js");
+} from "../controllers/flashcardController.js";
 
 const router = express.Router();
 
@@ -16,4 +16,4 @@ router.post("/", createFlashcard);
 router.put("/:id", updateFlashcard);
 router.delete("/:id", deleteFlashcard);
 
-module.exports = router;
+export default router;
