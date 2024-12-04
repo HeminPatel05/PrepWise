@@ -1,4 +1,4 @@
-const mongoose = require("mongoose");
+import mongoose from "mongoose";
 
 // Define Flashcard schema
 const flashcardSchema = new mongoose.Schema(
@@ -14,4 +14,4 @@ const flashcardSchema = new mongoose.Schema(
 );
 
 // Export the Flashcard model
-module.exports = mongoose.model("Flashcard", flashcardSchema);
+export default mongoose.model("Flashcard", flashcardSchema);
