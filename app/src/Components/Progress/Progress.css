@@ -1,0 +1,66 @@
+/* Progress.css */
+
+/* Basic styling for the body */
+body {
+  font-family: "Roboto", sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #f5f5f5;
+}
+
+/* Typography styles */
+h2,
+h3,
+h4 {
+  color: #333; /* Dark text for headings */
+  margin-bottom: 16px;
+}
+
+p,
+.MuiTypography-body1 {
+  color: #555; /* Medium text color for better readability */
+}
+
+/* Card styles */
+.MuiCard-root {
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Specific styling for the Gauge component */
+.gauge-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 24px;
+}
+
+/* Box layout adjustments */
+.MuiBox-root {
+  padding: 16px;
+  max-width: 80%; /* Added for consistent content width */
+  margin: 0 auto; /* Center the content */
+}
+
+/* Stack layout adjustments */
+.MuiStack-root {
+  max-width: 80%; /* Added to keep consistent width for stack */
+  margin: 0 auto;
+}
+
+/* Chip styles for topics */
+.MuiChip-root {
+  background-color: #e0e0e0;
+  color: #333;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .MuiBox-root {
+    flex-direction: column; /* Stack items vertically on smaller screens */
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+  }
+}
