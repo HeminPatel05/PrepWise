@@ -1,8 +1,7 @@
-const flashcardService = require("../services/flashcardService.js");
-
+import * as flashcardService from "../services/flashcardService.js";
 
 // Retrieve all flashcards with optional type filter
-exports.getAllFlashcards = async (req, res) => {
+export const getAllFlashcards = async (req, res) => {
   const { type } = req.query;
 
   try {
@@ -14,11 +13,8 @@ exports.getAllFlashcards = async (req, res) => {
   }
 };
 
-
-
-
 // Retrieve a flashcard by ID
-exports.getFlashcardById = async (req, res) => {
+export const getFlashcardById = async (req, res) => {
   const { id } = req.params;
 
   try {
@@ -34,7 +30,7 @@ exports.getFlashcardById = async (req, res) => {
 };
 
 // Create a new flashcard
-exports.createFlashcard = async (req, res) => {
+export const createFlashcard = async (req, res) => {
   const { section, type, question, options, answer, explanation } = req.body;
 
   if (!section || !type || !question || !options || !answer) {
@@ -61,7 +57,7 @@ exports.createFlashcard = async (req, res) => {
 };
 
 // Update a flashcard by ID
-exports.updateFlashcard = async (req, res) => {
+export const updateFlashcard = async (req, res) => {
   const { id } = req.params;
   const { section, type, question, options, answer, explanation } = req.body;
 
@@ -87,7 +83,7 @@ exports.updateFlashcard = async (req, res) => {
 };
 
 // Delete a flashcard by ID
-exports.deleteFlashcard = async (req, res) => {
+export const deleteFlashcard = async (req, res) => {
   const { id } = req.params;
 
   try {
