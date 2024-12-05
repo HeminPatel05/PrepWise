@@ -1,0 +1,132 @@
+.test-wrapper {
+    background-color: #f0f2f5; 
+    min-height: 50vh; 
+  }
+  
+  /* Container for the loading spinner or indicator */
+  .loading-container {
+    display: flex; /* Flexbox layout for centering the loading element */
+    justify-content: center; 
+    margin-top: 2rem;
+  }
+  
+  /* Navbar for the exit button */
+  .exit-navbar {
+    background-color: #2c3e50; 
+    padding: 10px 20px; 
+    display: flex; /*  flexbox layout */
+    justify-content: flex-end; 
+    align-items: center; /* Centers the content vertically */
+  }
+  .exit-navbar {
+    display: flex;
+    justify-content: flex-end;
+    padding: 1rem;
+  }
+  
+  .results-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 80vh;
+  }
+  
+  .results-paper {
+    padding: 2rem;
+    max-width: 600px;
+    width: 100%;
+  }
+  
+  .results-title {
+    margin-bottom: 1.5rem;
+    text-align: center;
+  }
+  
+  /* Exit button styles */
+  .exit-button {
+    background-color: #e74c3c !important; /* Red background */
+  }
+  
+  .exit-button:hover {
+    background-color: #c0392b !important; 
+  }
+  
+  /* Container for test results */
+  .results-container {
+    margin-top: 2rem; /* Adds top margin  */
+  }
+  
+  /*  for results display */
+  .results-paper {
+    padding: 20px; /* Padding inside the results container */
+    background-color: #f0f2f5; 
+  }
+  
+  .results-title {
+    color: #34495e; 
+    text-align: center; 
+  }
+  
+  .result-item {
+    margin-bottom: 10px; /* Adds spacing between result items */
+  }
+  
+  .section-title {
+    margin-bottom: 10px; /* Adds margin below section titles */
+  }
+  
+  .score-breakdown {
+    padding-left: 20px; /* Adds padding on the left */
+  }
+  
+  .question-container {
+    margin-top: 50px; 
+    padding-top: 20px; 
+  }
+  
+  .section-header {
+    display: flex; 
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .section-title {
+    flex: 1; /* Makes the title take up available space */
+    text-align: center; /* Centers the title */
+    color: #2980b9; 
+  }
+  
+  .calculator-button {
+    color: inherit; /* Inherits the color from its parent */
+  }
+  
+  .question-paper {
+    padding: 20px; 
+    margin-top: 1rem; 
+    background-color: #f0f2f5; 
+    border-radius: 4px; 
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); 
+  }
+  
+  .question-number {
+    color: #34495e; }
+  
+  .question-text {
+    margin-bottom: 20px; 
+    background-color: #FFF2C1; 
+    padding: 10px; 
+    border-radius: 4px; 
+  }
+  
+  /* Grouping for options within each question */
+  .options-group {
+    margin-top: 1rem; 
+  }
+  
+  .option-label {
+    color: #34495e !important; 
+  }
+  
+  .question-container {
+    background-color: #EFF2F5; 
+  }
