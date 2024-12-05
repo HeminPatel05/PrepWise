@@ -157,6 +157,25 @@ const Test: React.FC = () => {
     }
   };
 
+    // Handle the end of a section
+    const handleEndSection = () => {
+      if (completedSections.indexOf(currentSection) === -1) {
+        const currentSectionAnswers = answers.filter(
+          (a) => a.sectionType === test.sections[currentSection].section
+        );
+        setAnswers((prev) => [...prev, ...currentSectionAnswers]);
+        setCompletedSections((prev) => [...prev, currentSection]);
+      }
+      if (currentSection < test.sections.length - 1) {
+        setCurrentSection((prev) => prev + 1);
+        setCurrentQuestion(0);
+        const nextSectionType = test.sections[currentSection + 1].section as keyof SectionTimes;
+        setTimer(currentSectionTime[nextSectionType]);
+      } else {
+        handleSubmit();
+      }
+    };
+
  
 };
 export default Test;
