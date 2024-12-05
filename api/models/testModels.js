@@ -27,6 +27,16 @@ const questionSchema = new mongoose.Schema({
     },
     topic:{
         type: String,
+        enum:[
+            'Arithmetic',
+            'Algebra',
+            'Data Analysis',
+            'Word Problems',
+            'Text Completion',
+            'Sentence Equivalence',
+            'Reading Comprehension',
+            'Critical Reasoning',
+            ],
         required: false
     }
 });
@@ -54,5 +64,30 @@ const testSchema = new mongoose.Schema({
     },
     sections: [sectionSchema] // The test has multiple sections, each section has a set of questions
 });
+const resultSchema = new mongoose.Schema({
+    testID: { type: String, required: true },
+    testName: { type: String, required: true },
+    userID: { type: String, required: false }, // Assuming each test is tied to a user
+    totalScore: { type: Number, required: true },
+    quantScore: { type: Number, required: true },
+    verbalScore: { type: Number, required: true },
+    sectionWiseScores: {
+        Quant: {
+            Easy: Number,
+            Medium: Number,
+            Hard: Number,
+            total: Number
+        },
+        Verbal: {
+            Easy: Number,
+            Medium: Number,
+            Hard: Number,
+            total: Number
+        }
+    },
+    topicWiseScores: Object, // Flexible object to accommodate topics dynamically
+    submittedAt: { type: Date, default: Date.now }
+});
 
 export default mongoose.model('Test', testSchema);
+export const Result = mongoose.model('Result', resultSchema);
