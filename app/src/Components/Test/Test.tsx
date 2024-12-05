@@ -176,6 +176,27 @@ const Test: React.FC = () => {
       }
     };
 
+      // Navigate to previous question
+  const handlePrevious = () => {
+    if (currentQuestion > 0) {
+      setCurrentQuestion((prev) => prev - 1);
+    } else {
+      console.log('You are at the first question of the section.');
+    }
+  };
+
+  // Navigate to next question or section
+  const handleNext = () => {
+    if (currentQuestion < test.sections[currentSection].questions.length - 1) {
+      setCurrentQuestion((prev) => prev + 1);
+    } else if (
+      currentSection < test.sections.length - 1 &&
+      completedSections.indexOf(currentSection + 1) === -1
+    ) {
+      setCurrentSection((prev) => prev + 1);
+      setCurrentQuestion(0);
+    }
+  };
  
 };
 export default Test;
