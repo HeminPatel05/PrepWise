@@ -18,7 +18,7 @@ const router = express.Router();
 router.get('/test', getAllTests); // Get all tests
 router.get('/test/:testId', getTestById); // Get a specific test by ID
 router.post('/test', createTest); // Create a new test
-router.put('/test/:testId/submit', submitTest); // Submit the test and calculate scores (changed to PUT for consistency)
+router.post('/test/:testId/submit', submitTest); // Submit the test and calculate scores (changed to PUT for consistency)
 router.put('/test/:testId', updateTest); // Update the entire test
 router.put('/test/:testId/section/:section', updateSection); // Update a specific section of a test
 router.put('/test/:testId/section/:section/question/:questionId', updateQuestion); // Update a specific question in a section
