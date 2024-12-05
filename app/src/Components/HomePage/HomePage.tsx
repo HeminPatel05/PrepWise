@@ -3,10 +3,10 @@ import { useNavigate } from 'react-router-dom';
 import './HomePage.css';
 
 // Import images
-import image1 from '../assets/images/feature-image1.png';
-import image2 from '../assets/images/feature-image2.png';
-import image3 from '../assets/images/feature-image3.png';
-import header_image from '../assets/images/header-image.png';
+import image1 from '../../asstes/images/feature-image1.png';
+import image2 from '../../asstes/images/feature-image2.png';
+import image3 from '../../asstes/images/feature-image3.png';
+import header_image from '../../asstes/images/header-image.png';
 
 const HomePage: React.FC = () => {
   const navigate = useNavigate(); // React Router hook for navigation
