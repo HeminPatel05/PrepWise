@@ -137,6 +137,26 @@ const Test: React.FC = () => {
       });
     };
 
+      // Handle test submission
+  const handleSubmit = async () => {
+    try {
+      const finalAnswers = answers;
+      const response = await fetch(`http://localhost:3000/test/${allTestIds[0]}/submit`, { // Submit using first ID
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ answers: finalAnswers }),
+      });
+      if (!response.ok) throw new Error('Submission failed');
+      const data = await response.json();
+      setResults(data); // Store test results
+      setSubmitted(true); // Mark test as submitted
+    } catch (err: any) {
+      setError(err.message);
+    }
+  };
+
  
 };
 export default Test;
