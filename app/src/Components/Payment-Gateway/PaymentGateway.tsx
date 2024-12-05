@@ -3,11 +3,13 @@ import "./PaymentGateway.css";
 import { makePayment } from "../../services/payment-service";
 
 const PaymentGateway: React.FC = () => {
+  const [customerEmail, SetCustomerEmail] = useState<String>("");
+
   const handlePayment = async () => {
-    const plan_id = "price_1QRyu5RtqhgVOSLkdsRE0IfB";
+    const customer_email = "a@mail.com";
 
     console.log("Payment");
-    makePayment({ plan_id: plan_id });
+    makePayment({ customer_email: customer_email });
   };
   return (
     <div className="payment-container">

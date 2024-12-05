@@ -16,5 +16,5 @@ export interface Summary {
 }
 
 export interface Payment {
-  plan_id: string;
+  customer_email: string;
 }

@@ -1,0 +1,42 @@
+.success-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: #f0f9ff;
+  color: #1a202c;
+}
+
+.success-card {
+  text-align: center;
+  background-color: #ffffff;
+  padding: 2rem;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.success-card h1 {
+  font-size: 2rem;
+  color: #38a169;
+  margin-bottom: 1rem;
+}
+
+.success-card p {
+  margin-bottom: 1rem;
+  font-size: 1.2rem;
+}
+
+.success-button {
+  padding: 0.8rem 1.5rem;
+  font-size: 1rem;
+  color: #ffffff;
+  background-color: #38a169;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.success-button:hover {
+  background-color: #2f855a;
+}
