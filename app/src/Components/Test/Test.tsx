@@ -12,9 +12,9 @@ import {
   IconButton,
 } from '@mui/material';
 import { Calculate } from '@mui/icons-material'; // Import calculator icon
-import Navbar from './TestNavbar';
-import CalculatorWindow from './TestCalculator';
-import TestResult from './TestResult';
+import Navbar from '../Test/TestNavbar';
+import CalculatorWindow from '../Test/TestCalculator';
+import TestResult from '../Test/TestResult';
 import { useParams } from 'react-router-dom'; // Import useParams
 import './Test.css';
 
