@@ -14,6 +14,9 @@ import Register from "./Components/Register/Register"; // Import Register
 import HomePage from "./Components/HomePage/HomePage"; // Import Home Page
 import Success from "./Components/Payment-Gateway/Success";
 import Failure from "./Components/Payment-Gateway/Failure";
+import TestList from "./Components/Test/TestList";
+import InstructionsPage from "./Components/Test/TestInstructionPage";
+import Test from "./Components/Test/Test";
 
 const App: React.FC = () => {
   return (
@@ -44,12 +47,15 @@ const App: React.FC = () => {
             <Route path="/login" element={<Login />} /> {/* Login Page */}
             <Route path="/register" element={<Register />} />{" "}
             {/* Register Page */}
-            {/* Test List route
-          <Route path="/tests" element={<TestList />} />
-          {/* Instructions route with dynamic testId */}
-            {/* <Route path="/instructions/:testId" element={<InstructionsPage />} />
-          {/* Test page route with dynamic testId */}
-            {/* <Route path="/test/:testId" element={<Test />} /> */}
+            Test List route
+            <Route path="/tests" element={<TestList />} />
+            {/* Instructions route with dynamic testId */}
+            <Route
+              path="/instructions/:testId"
+              element={<InstructionsPage />}
+            />
+            {/* Test page route with dynamic testId */}
+            <Route path="/test/:testId" element={<Test />} />
           </Routes>
         </div>
       </Router>
