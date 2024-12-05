@@ -1,4 +1,5 @@
 import Test from '../models/testModels.js';
+import mongoose from 'mongoose';  // Make sure mongoose is imported here
 
 // Get all tests
 export const getAllTests = async () => {
@@ -14,9 +15,17 @@ export const getAllTests = async () => {
 // Get a single test by ID
 export const getTestById = async (id) => {
     try {
+        // Check if the ID is a valid MongoDB ObjectId
+        if (!mongoose.Types.ObjectId.isValid(id)) {
+            throw new Error('Invalid ID format');
+        }
+
         // Fetch a single test based on the provided ID
         const test = await Test.findById(id);
-        if (!test) throw new Error('Test not found');
+        if (!test) {
+            console.log('Test not found with ID:', id);  // Log the ID if test is not found
+            throw new Error('Test not found');
+        }
         return test;
     } catch (error) {
         throw new Error(`Error fetching test by ID: ${error.message}`);
@@ -35,76 +44,76 @@ export const createTest = async (testData) => {
     }
 };
 
-// Submit a test and calculate scores
-export const submitTest = async (id, answers) => {
+
+import {  Result } from '../models/testModels.js'; // Import both Test and Result models
+
+export const submitTest = async (id, answers, userID) => {
     try {
         // Find the test in the database by ID
         const test = await Test.findById(id);
         if (!test) throw new Error('Test not found');
 
-        // Initialize the scores object to track total and section-wise scores
+        // Initialize scores object
         const scores = {
             total: 0,
             Quant: { Easy: 0, Medium: 0, Hard: 0, total: 0 },
-            Verbal: { Easy: 0, Medium: 0, Hard: 0, total: 0 }
+            Verbal: { Easy: 0, Medium: 0, Hard: 0, total: 0 },
+            topicWise: {}
         };
 
-        // Iterate through each section in the test
+        // Calculate scores
         test.sections.forEach(section => {
             section.questions.forEach(question => {
-                // Find the user's answer for the current question
+                if (question.topic && !scores.topicWise[question.topic]) {
+                    scores.topicWise[question.topic] = { questionsAsked: 0, marksScored: 0 };
+                }
+
+                if (question.topic) {
+                    scores.topicWise[question.topic].questionsAsked++;
+                }
+
                 const userAnswer = answers.find(ans => ans.questionID === question.questionID);
 
                 if (userAnswer && userAnswer.selectedOption === question.correctOption) {
-                    // Update scores
                     scores.total++;
                     scores[section.section].total++;
                     scores[section.section][question.difficultyLevel]++;
+                    
+                    if (question.topic) {
+                        scores.topicWise[question.topic].marksScored++;
+                    }
                 }
             });
         });
 
+        // Create a result object to store the test result
+        const result = new Result({
+            testID: test.testID,
+            testName: test.testName,
+            userID: userID,
+            totalScore: scores.total,
+            quantScore: scores.Quant.total,
+            verbalScore: scores.Verbal.total,
+            sectionWiseScores: { Quant: scores.Quant, Verbal: scores.Verbal },
+            topicWiseScores: scores.topicWise
+        });
+
+        // Save the result in the Result collection
+        await result.save();
+
+        // Return result for confirmation
         return {
             totalScore: scores.total,
             quantScore: scores.Quant.total,
             verbalScore: scores.Verbal.total,
-            sectionWiseScores: { 
-                Quant: scores.Quant, 
-                Verbal: scores.Verbal 
-            }
+            sectionWiseScores: { Quant: scores.Quant, Verbal: scores.Verbal },
+            topicWiseScores: scores.topicWise
         };
     } catch (error) {
         throw new Error(`Error submitting test: ${error.message}`);
     }
 };
 
-// Update an entire test
-export const updateTest = async (id, updatedData) => {
-    try {
-        const updatedTest = await Test.findByIdAndUpdate(id, updatedData, { new: true });
-        if (!updatedTest) throw new Error('Test not found');
-        return updatedTest;
-    } catch (error) {
-        throw new Error(`Error updating test: ${error.message}`);
-    }
-};
-
-// Update a specific section
-export const updateSection = async (testID, sectionName, updatedSectionData) => {
-    try {
-        const test = await Test.findById(testID);
-        if (!test) throw new Error('Test not found');
-
-        const sectionToUpdate = test.sections.find(sec => sec.section === sectionName);
-        if (!sectionToUpdate) throw new Error('Section not found');
-
-        Object.assign(sectionToUpdate, updatedSectionData);
-        await test.save();
-        return test;
-    } catch (error) {
-        throw new Error(`Error updating section: ${error.message}`);
-    }
-};
 
 // Update a specific question
 export const updateQuestion = async (testID, sectionName, questionID, updatedQuestionData) => {
