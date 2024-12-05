@@ -1,6 +1,6 @@
 import React, { useState, ChangeEvent, FormEvent } from 'react';
 import { TextField, Button, Box, Typography } from '@mui/material';
-import { addUser } from '../services/api';
+import { addUser } from '../../services/api';
 import './Register.css';
 
 interface FormData {
