@@ -6,7 +6,7 @@ dotenv.config();
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 
-const plan_id = "price_1QRyu5RtqhgVOSLkdsRE0IfB";
+const plan_id = process.env.PLAN_ID;
 
 const router = express.Router();
 
@@ -22,12 +22,28 @@ router.post("/payment", async (req, res) => {
           quantity: 1,
         },
       ],
-      success_url: "https://google.com/",
-      cancel_url: "https://youtube.com/",
-      customer_email: "hellow@gmail.com",
+      success_url: `${process.env.BASE}/payment-success`,
+      cancel_url: `${process.env.BASE}/payment-faliure`,
+      customer_email: req.body.customer_email,
     });
     console.log(session);
     return res.status(200).json({ session });
+  } catch (error) {
+    console.log(error);
+  }
+});
+
+router.post("/save-payment", async (req, res) => {
+  const { session_id } = req.body;
+
+  try {
+    const session = await stripe.checkout.sessions.retrieve(session_id);
+    const payment = await stripe.payment.retrieve(session.payment);
+
+    if (session.status === "complete") {
+      console.log({ session, payment });
+      return res.status(200).json({ session, subscription });
+    }
   } catch (error) {
     console.log(error);
   }
