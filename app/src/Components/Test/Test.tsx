@@ -114,6 +114,29 @@ const Test: React.FC = () => {
       setLoading(false);
     }
   };
+    // Handle answer selection and store it
+    const handleAnswerSelect = (event: React.ChangeEvent<HTMLInputElement>) => {
+      if (!test) return;
+  
+      const currentQuestionData = test.sections[currentSection].questions[currentQuestion];
+      const selectedOptionValue = event.target.value;
+      const newAnswer = {
+        questionID: currentQuestionData.questionID,
+        selectedOption: selectedOptionValue,
+        sectionType: test.sections[currentSection].section,
+      };
+  
+      setAnswers((prevAnswers) => {
+        const existingIndex = prevAnswers.findIndex((a) => a.questionID === newAnswer.questionID);
+        if (existingIndex !== -1) {
+          const updatedAnswers = [...prevAnswers];
+          updatedAnswers[existingIndex] = newAnswer;
+          return updatedAnswers;
+        }
+        return [...prevAnswers, newAnswer];
+      });
+    };
+
  
 };
 export default Test;
