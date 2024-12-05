@@ -8,5 +8,6 @@ router.post('/', userController.createUser);
 router.get('/:userId', userController.getUserById);
 router.put('/:userId', userController.updateUser);
 router.delete('/:userId', userController.deleteUser);
+router.post('/login', userController.loginUser); // Login route
 
 export default router;
