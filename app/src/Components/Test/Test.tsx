@@ -197,6 +197,70 @@ const Test: React.FC = () => {
       setCurrentQuestion(0);
     }
   };
+
+
+  // Loading, error, and no test scenarios
+  if (loading) return <Container className="loading-container"><CircularProgress /></Container>;
+  if (error) return <Container><Alert severity="error">{error}</Alert></Container>;
+  if (!test) return <Container><Alert severity="info">No test available</Alert></Container>;
+
+  // Calculate the total number of questions for display
+  const totalQuestions = test.sections.reduce((total: number, section: any) => total + section.questions.length, 0);
+  const totalQuantQuestions = test.sections.find((s: any) => s.section === 'Quant')?.questions.length || 0;
+  const totalVerbalQuestions = test.sections.find((s: any) => s.section === 'Verbal')?.questions.length || 0;
+
+  const currentSectionData = test.sections[currentSection];
+  const currentQuestionData = currentSectionData.questions[currentQuestion];
+  const currentAnswer = answers.find((a) => a.questionID === currentQuestionData.questionID);
+
+  return (
+    <Box className="test-wrapper">
+      {submitted ? (
+        <TestResult
+          results={results}
+          totalQuestions={totalQuestions}
+          totalQuantQuestions={totalQuantQuestions}
+          totalVerbalQuestions={totalVerbalQuestions}
+        />
+      ) : (
+        <>
+          <Navbar
+            onPrevious={handlePrevious}
+            onNext={handleNext}
+            onEndSection={handleEndSection}
+            onEndTest={handleSubmit}
+            timer={timer}
+          />
+          <Container className="question-container">
+            <Box className="section-header">
+              <Typography variant="h4">{currentSectionData.section} Section</Typography>
+              <IconButton onClick={() => setShowCalculatorWindow((prev) => !prev)}>
+                <Calculate />
+              </IconButton>
+            </Box>
+            <Paper elevation={5} className="question-paper">
+              <Typography variant="h6">Question {currentQuestion + 1} of {currentSectionData.questions.length}</Typography>
+              <Typography variant="body1">{currentQuestionData.questionText}</Typography>
+              <RadioGroup
+                value={currentAnswer ? currentAnswer.selectedOption : ''}
+                onChange={handleAnswerSelect}
+              >
+                {currentQuestionData.options.map((option: string, index: number) => (
+                  <FormControlLabel
+                    key={index}
+                    value={option}
+                    control={<Radio />}
+                    label={option}
+                  />
+                ))}
+              </RadioGroup>
+            </Paper>
+          </Container>
+          {showCalculatorWindow && <CalculatorWindow onClose={() => setShowCalculatorWindow(false)} />}
+        </>
+      )}
+    </Box>
+  );
  
 };
 export default Test;
