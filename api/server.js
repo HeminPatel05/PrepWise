@@ -1,5 +1,7 @@
 import express from "express";
 import dotenv from "dotenv";
+import mongoose from 'mongoose';
+/*import app from './app.js';*/
 import initialize from "./app.js";
 
 //dotenv config
