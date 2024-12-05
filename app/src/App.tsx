@@ -8,11 +8,17 @@ import Progress from "./Components/Progress/Progress";
 import AboutUs from "./Components/AboutUs/AboutUs";
 import PaymentGateway from "./Components/Payment-Gateway/PaymentGateway";
 import PageNotFound from "./Components/PageNotFound/PageNotFound";
+import Navbar from './Components/NavbarLR/Navbar'; // Import Navbar
+import Login from './Components/Login/Login'; // Import Login
+import Register from './Components/Register/Register'; // Import Register
+import HomePage from './Components/HomePage/HomePage'; // Import Home Page
 
 const App: React.FC = () => {
   return (
+    <div>
+      <Navbar /> {/* Navbar */}
     <Router>
-      <div>
+      <div /*style={{ flexGrow: 1 }}*/>
         <Routes>
           {/* Default route renders the FlashcardQuantPage */}
           <Route path="/" element={<FlashcardQuantPage />} />
@@ -28,10 +34,8 @@ const App: React.FC = () => {
           <Route path="/premium" element={<PaymentGateway />} />
           <Route path="*" element={<PageNotFound />} />
           <Route path="/homepage" element={<HomePage />} /> {/* Home Page */}
-          <Route path="/login" element={<Login />} /> {/* Login Page */}
-          <Route path="/register" element={<Register />} />
-          {/* Register Page */}
-          <Route path="/" element={<HomePage />} />
+            <Route path="/login" element={<Login />} /> {/* Login Page */}
+            <Route path="/register" element={<Register />} /> {/* Register Page */}
           {/* Test List route */}
           <Route path="/tests" element={<TestList />} />
           {/* Instructions route with dynamic testId */}
@@ -41,6 +45,7 @@ const App: React.FC = () => {
         </Routes>
       </div>
     </Router>
+    </div>
   );
 };
 
