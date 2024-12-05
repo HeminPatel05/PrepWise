@@ -14,15 +14,24 @@ export const getAllTests = async (req, res) => {
 
 // Get a single test by ID
 // This function retrieves a specific test based on the provided ID from the request parameters
+// testController.js
+
+
 export const getTestById = async (req, res) => {
     try {
-        const { id } = req.params;
-        const test = await testService.getTestById(id);
-        res.status(200).json(test); // Responds with status 200 and the test data
+        // Extract the id from the URL parameter, it should match ':testId' in the route
+        const { testId } = req.params;
+        console.log(`Fetching test with ID: ${testId}`);  // Log the testId to verify it's being passed correctly
+
+        // Now call the service function with the extracted testId
+        const test = await testService.getTestById(testId);  
+        res.status(200).json(test);  // Respond with the test data if found
     } catch (error) {
-        res.status(404).json({ error: error.message }); // Handles errors with status 404 if test is not found
+        console.error(`Error: ${error.message}`);
+        res.status(404).json({ error: error.message });
     }
 };
+
 
 // Create a new test
 // This function creates a new test with the provided request body data and saves it in the database
@@ -39,9 +48,11 @@ export const createTest = async (req, res) => {
 // This function handles test submission, evaluates the answers, and returns the result
 export const submitTest = async (req, res) => {
     try {
-        const { id } = req.params;
+        const { testId } = req.params;
         const { answers } = req.body;
-        const result = await testService.submitTest(id, answers);
+        console.log(`Fetching test with ID: ${testId}`);  // Log the testId to verify it's being passed correctly
+
+        const result = await testService.submitTest(testId, answers);
         res.status(200).json(result); // Responds with status 200 and the result of the test
     } catch (error) {
         res.status(500).json({ error: error.message }); // Handles server errors with status 500
