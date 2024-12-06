@@ -1,4 +1,4 @@
-import { Payment } from "../models/Progress";
+import { Payment, SavePayment } from "../models/Progress";
 
 const base = `http://localhost:3000/payment`;
 
@@ -27,4 +27,16 @@ export const makePayment = async (data: Payment) => {
   } catch (error) {
     console.error("Payment failed", error);
   }
+};
+
+export const savePayment = async (data: SavePayment) => {
+  const response = await fetch(`${base}/save-payment`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(data),
+  });
+
+  console.log("save payment paayment service api response::::" + response);
 };

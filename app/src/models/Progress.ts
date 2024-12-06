@@ -18,3 +18,8 @@ export interface Summary {
 export interface Payment {
   customer_email: string;
 }
+
+export interface SavePayment {
+  session_id: string;
+  user_id: string;
+}
