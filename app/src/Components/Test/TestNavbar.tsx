@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Box, Button, Typography } from '@mui/material';
 import { blue } from '@mui/material/colors';
@@ -12,7 +11,7 @@ interface NavbarProps {
   timer: number; // Timer value for the test countdown
 }
 
-const Navbar: React.FC<NavbarProps> = ({ onPrevious, onNext, onEndSection, onEndTest, timer }) => {
+const TestNavbar: React.FC<NavbarProps> = ({ onPrevious, onNext, onEndSection, onEndTest, timer }) => {
   // Helper function to format the time in mm:ss format
   const formatTime = (seconds: number): string => {
     if (!seconds || seconds < 0) return "00:00"; // If timer is 0 or less, return 00:00
@@ -102,4 +101,4 @@ const Navbar: React.FC<NavbarProps> = ({ onPrevious, onNext, onEndSection, onEnd
   );
 };
 
-export default Navbar;
+export default TestNavbar;
