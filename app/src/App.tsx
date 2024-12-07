@@ -19,9 +19,9 @@ import InstructionsPage from "./Components/Test/TestInstructionPage";
 import Test from "./Components/Test/Test";
 
 const App: React.FC = () => {
-  return (      
-      <Router>
-        <div>
+  return (
+    <Router>
+      <div>
         <Navbar /> {/* Navbar */}
         <div /*style={{ flexGrow: 1 }}*/>
           <Routes>
@@ -30,7 +30,10 @@ const App: React.FC = () => {
             {/* Route to render the Flashcards page */}
             <Route path="/flashcards" element={<Flashcards />} />
             <Route path="/flashcards-quant" element={<FlashcardsQuantPage />} />
-            <Route path="/flashcards-verbal" element={<FlashcardVerbalPage />} />
+            <Route
+              path="/flashcards-verbal"
+              element={<FlashcardVerbalPage />}
+            />
             <Route path="/progress" element={<Progress />} />
             <Route path="/about-us" element={<AboutUs />} />
             <Route path="/premium" element={<PaymentGateway />} />
@@ -39,17 +42,21 @@ const App: React.FC = () => {
             <Route path="*" element={<PageNotFound />} />
             <Route path="/homepage" element={<HomePage />} /> {/* Home Page */}
             <Route path="/login" element={<Login />} /> {/* Login Page */}
-            <Route path="/register" element={<Register />} />{/* Register Page */}
+            <Route path="/register" element={<Register />} />
+            {/* Register Page */}
             {/* Test List route */}
             <Route path="/tests" element={<TestList />} />
             {/* Instructions route with dynamic testId */}
-            <Route path="/instructions/:testId" element={<InstructionsPage />} />
+            <Route
+              path="/instructions/:testId"
+              element={<InstructionsPage />}
+            />
             {/* Test page route with dynamic testId */}
             <Route path="/test/:testId" element={<Test />} />
           </Routes>
         </div>
-        </div>
-      </Router>
+      </div>
+    </Router>
   );
 };
 

@@ -1,18 +1,36 @@
-import React from 'react';
-import { useNavigate } from 'react-router-dom';
-import './HomePage.css';
+import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import "./HomePage.css";
 
 // Import images
-import image1 from '../../asstes/images/feature-image1.png';
-import image2 from '../../asstes/images/feature-image2.png';
-import image3 from '../../asstes/images/feature-image3.png';
-import header_image from '../../asstes/images/header-image.png';
+import image1 from "../../asstes/images/feature-image1.png";
+import image2 from "../../asstes/images/feature-image2.png";
+import image3 from "../../asstes/images/feature-image3.png";
+import header_image from "../../asstes/images/header-image.png";
+import { getUser } from "../../services/api";
 
 const HomePage: React.FC = () => {
   const navigate = useNavigate(); // React Router hook for navigation
+  const user_id = "6750e4745e277a332f4f8515";
+  const [isPremium, setIsPremium] = useState<Boolean>(false);
+
+  // Fetch user data on component mount
+  useEffect(() => {
+    const fetchUserData = async () => {
+      try {
+        const response = (await getUser({ user_id })).data.premiumUser; // Resolve the promise
+        console.log("homepage user.data:", response); // Log JSON data
+        setIsPremium(response); // Store JSON data in state
+      } catch (error) {
+        console.error("Error fetching user data:", error);
+      }
+    };
+
+    fetchUserData();
+  }, [user_id]);
 
   const handleStartNow = (): void => {
-    navigate('/login'); // Navigate to the Login page
+    navigate("/login"); // Navigate to the Login page
   };
 
   return (
@@ -28,7 +46,11 @@ const HomePage: React.FC = () => {
           </button>
         </div>
         <div className="hero-right">
-          <img src={header_image} alt="GRE Preparation" className="hero-image" />
+          <img
+            src={header_image}
+            alt="GRE Preparation"
+            className="hero-image"
+          />
         </div>
       </header>
 
@@ -45,18 +67,32 @@ const HomePage: React.FC = () => {
         <div className="feature-cards">
           <div className="feature-card">
             <h3>Accessible</h3>
-            <p><ul>
-              <li>Study on your own with self-study prep or on-demand classes</li>
-              <li>Email assistance whenever require</li>
-              <li>Take it anywhere, anytime with our mobile apps or desktop</li>
-              </ul></p>
+            <p>
+              <ul>
+                <li>
+                  Study on your own with self-study prep or on-demand classes
+                </li>
+                <li>Email assistance whenever require</li>
+                <li>
+                  Take it anywhere, anytime with our mobile apps or desktop
+                </li>
+              </ul>
+            </p>
           </div>
           <div className="feature-card">
             <h3>Effective</h3>
-            <p><ul>
-              <li>Top-quality study materials continually updated based on previous students answers</li>
-              <li>Smart feedback and progress tracking to turn your weaknesses into strengths</li>
-              </ul></p>
+            <p>
+              <ul>
+                <li>
+                  Top-quality study materials continually updated based on
+                  previous students answers
+                </li>
+                <li>
+                  Smart feedback and progress tracking to turn your weaknesses
+                  into strengths
+                </li>
+              </ul>
+            </p>
           </div>
           <div className="feature-card">
             <h3>Affordable</h3>
@@ -82,17 +118,27 @@ const HomePage: React.FC = () => {
         <h2>What Our Users Say</h2>
         <div className="review-cards">
           <div className="review-card">
-            <p>"Prepwise was a game-changer for my GRE prep. The practice questions and progress tracking really helped me stay on top of my goals!"</p>
+            <p>
+              "Prepwise was a game-changer for my GRE prep. The practice
+              questions and progress tracking really helped me stay on top of my
+              goals!"
+            </p>
             <h4>- John Doe</h4>
             <div className="rating">⭐⭐⭐⭐⭐</div>
           </div>
           <div className="review-card">
-            <p>"The detailed explanations for each question were amazing! I felt more confident walking into the exam thanks to Prepwise."</p>
+            <p>
+              "The detailed explanations for each question were amazing! I felt
+              more confident walking into the exam thanks to Prepwise."
+            </p>
             <h4>- Jane Smith</h4>
             <div className="rating">⭐⭐⭐⭐⭐</div>
           </div>
           <div className="review-card">
-            <p>"I love the mobile app! I could study anytime, anywhere. Prepwise made it so easy to fit studying into my busy schedule."</p>
+            <p>
+              "I love the mobile app! I could study anytime, anywhere. Prepwise
+              made it so easy to fit studying into my busy schedule."
+            </p>
             <h4>- Mark Wilson</h4>
             <div className="rating">⭐⭐⭐⭐</div>
           </div>
