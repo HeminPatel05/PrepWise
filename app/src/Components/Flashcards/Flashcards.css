@@ -35,8 +35,19 @@ body {
     border-radius: 10px;
     padding: 20px;
     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
 }
 
+/* Adjusting chart size */
+.chart-section canvas {
+    width: 100%;
+    max-height: 300px; /* Reduced height while maintaining proportions */
+}
+
+/* Chart heading */
 .chart-section h2 {
     text-align: center;
     font-size: 22px;
@@ -190,7 +201,11 @@ body {
 
     .quiz-section,
     .chart-section {
-        flex: 1 1 100%;
+        flex: 1 1 100%; /* Full width for smaller screens */
+    }
+
+    .chart-section canvas {
+        max-height: 250px; /* Adjust height for smaller screens */
     }
 }
 
@@ -204,5 +219,9 @@ body {
         width: 200px;
         font-size: 16px;
         height: 45px;
+    }
+
+    .chart-section canvas {
+        max-height: 200px; /* Further reduce chart height for very small screens */
     }
 }
