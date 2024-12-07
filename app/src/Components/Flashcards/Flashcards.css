@@ -9,17 +9,17 @@ body {
 /* Main container styling */
 .container {
     width: 80%;
-    max-width: 1000px;
+    max-width: 70%;
     margin: auto;
-    margin-top: 50px;
+    margin-top: 5vh;
     background: #ffffff; /* White background for the container */
     color: #555; /* Slightly darker text color for readability */
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
-    gap: 20px;
-    border-radius: 10px;
-    padding: 40px 50px;
+    gap: 2%;
+    border-radius: 1vw;
+    padding: 4vh 5%;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Soft shadow */
 }
 
@@ -32,8 +32,8 @@ body {
 .chart-section {
     flex: 1 1 35%;
     background-color: #fafafa;
-    border-radius: 10px;
-    padding: 20px;
+    border-radius: 1vw;
+    padding: 2vh;
     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
     display: flex;
     flex-direction: column;
@@ -44,30 +44,30 @@ body {
 /* Adjusting chart size */
 .chart-section canvas {
     width: 100%;
-    max-height: 300px; /* Reduced height while maintaining proportions */
+    max-height: 30vh; /* Reduced height while maintaining proportions */
 }
 
 /* Chart heading */
 .chart-section h2 {
     text-align: center;
-    font-size: 22px;
+    font-size: 2.2vh;
     color: #333;
-    margin-bottom: 20px;
+    margin-bottom: 2vh;
 }
 
 /* Horizontal divider */
 .container hr {
-    height: 2px;
+    height: 0.2vh;
     border: none;
     background: #e0e0e0; /* Light gray divider */
 }
 
 /* Question heading */
 .container h2 {
-    font-size: 24px;
+    font-size: 2.4vh;
     font-weight: 500;
     color: #333;
-    margin-bottom: 10px;
+    margin-bottom: 1vh;
 }
 
 /* List of options */
@@ -79,12 +79,12 @@ body {
 .container ul li {
     display: flex;
     align-items: center;
-    height: 60px;
-    padding-left: 15px;
-    border: 1px solid #ccc; /* Light border */
-    border-radius: 8px;
-    margin-bottom: 15px;
-    font-size: 18px;
+    height: 6vh;
+    padding-left: 1.5%;
+    border: 0.1vh solid #ccc; /* Light border */
+    border-radius: 0.8vw;
+    margin-bottom: 1.5vh;
+    font-size: 1.8vh;
     cursor: pointer;
     transition: background-color 0.3s ease, transform 0.2s ease;
 }
@@ -110,13 +110,13 @@ body {
 .explanation {
     display: none; /* Initially hidden */
     background-color: #fff8f8; /* Lighter red tone for softer look */
-    padding: 20px 25px;
-    border-radius: 12px;
-    font-size: 18px;
+    padding: 2vh 2.5%;
+    border-radius: 1.2vw;
+    font-size: 1.8vh;
     color: #444; /* Darker text color */
-    margin-top: 25px;
-    border: 2px solid #ff6b6b; /* Darker red border for emphasis */
-    box-shadow: 0 0 12px rgba(255, 107, 107, 0.5);
+    margin-top: 2.5vh;
+    border: 0.2vh solid #ff6b6b; /* Darker red border for emphasis */
+    box-shadow: 0 0 1.2vw rgba(255, 107, 107, 0.5);
     transition: all 0.3s ease-in-out;
     opacity: 0; /* Initially hidden */
 }
@@ -137,9 +137,9 @@ body {
 /* Animations for wrong answers */
 @keyframes shake {
     0% { transform: translateX(0); }
-    25% { transform: translateX(-10px); }
-    50% { transform: translateX(10px); }
-    75% { transform: translateX(-10px); }
+    25% { transform: translateX(-1vw); }
+    50% { transform: translateX(1vw); }
+    75% { transform: translateX(-1vw); }
     100% { transform: translateX(0); }
 }
 
@@ -151,7 +151,7 @@ body {
 /* Animations for explanations */
 @keyframes slideIn {
     0% {
-        transform: translateY(-20px);
+        transform: translateY(-2vh);
         opacity: 0;
     }
     100% {
@@ -168,14 +168,14 @@ body {
 /* Buttons */
 .container button {
     margin: auto;
-    width: 250px;
-    height: 50px;
+    width: 25%;
+    height: 5vh;
     background: #4CAF50; /* Green button */
     color: white;
-    font-size: 18px;
+    font-size: 1.8vh;
     font-weight: 500;
-    border-radius: 8px;
-    border: 1px solid #4CAF50;
+    border-radius: 0.8vw;
+    border: 0.1vh solid #4CAF50;
     text-align: center;
     cursor: pointer;
     transition: background-color 0.3s ease, transform 0.2s ease;
@@ -188,15 +188,15 @@ body {
 
 .container button:focus {
     outline: none;
-    box-shadow: 0 0 10px rgba(76, 175, 80, 0.6); /* Focus effect for accessibility */
+    box-shadow: 0 0 1vw rgba(76, 175, 80, 0.6); /* Focus effect for accessibility */
 }
 
 /* Responsive adjustments */
 @media screen and (max-width: 768px) {
     .container {
         flex-direction: column;
-        gap: 30px;
-        padding: 20px;
+        gap: 3vh;
+        padding: 2vh;
     }
 
     .quiz-section,
@@ -205,23 +205,23 @@ body {
     }
 
     .chart-section canvas {
-        max-height: 250px; /* Adjust height for smaller screens */
+        max-height: 25vh; /* Adjust height for smaller screens */
     }
 }
 
 @media screen and (max-width: 480px) {
     .container ul li {
-        font-size: 16px;
-        height: 50px;
+        font-size: 1.6vh;
+        height: 5vh;
     }
 
     .container button {
-        width: 200px;
-        font-size: 16px;
-        height: 45px;
+        width: 20%;
+        font-size: 1.6vh;
+        height: 4.5vh;
     }
 
     .chart-section canvas {
-        max-height: 200px; /* Further reduce chart height for very small screens */
+        max-height: 20vh; /* Further reduce chart height for very small screens */
     }
 }
