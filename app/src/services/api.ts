@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios from "axios";
 
 const API = axios.create({ baseURL: 'http://localhost:3000' });
 
@@ -20,11 +20,11 @@ interface UserData {
   user_id: string;
 }
 
-export const addUser = async (data: RegisterData) =>
-  axios.post('http://localhost:3000/api/register', data);
-
 export const loginUser = (credentials: LoginCredentials) =>
-  axios.post('http://localhost:3000/api/login', credentials);
+  axios.post("/api/login", credentials);
+
+export const addUser = (data: RegisterData) =>
+  axios.post("/api/register", data);
 
 export const getUser = (data: UserData) =>
   axios.get(`/api/users/${data.user_id}`);
