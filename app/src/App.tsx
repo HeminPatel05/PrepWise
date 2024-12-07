@@ -29,7 +29,7 @@ const App: React.FC = () => {
             <Route path="/" element={<FlashcardQuantPage />} />
             {/* Route to render the Flashcards page */}
             <Route path="/flashcards" element={<Flashcards />} />
-            <Route path="/flashcards/FlashcardsQuantPage" element={<FlashcardsQuantPage />} />
+            <Route path="/flashcards-quant" element={<FlashcardsQuantPage />} />
             <Route path="/flashcards-verbal" element={<FlashcardVerbalPage />} />
             <Route path="/progress" element={<Progress />} />
             <Route path="/about-us" element={<AboutUs />} />

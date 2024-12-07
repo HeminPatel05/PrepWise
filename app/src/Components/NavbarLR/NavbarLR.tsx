@@ -24,8 +24,8 @@ const Navbar: React.FC = () => {
         <a href="/profile">Profile</a>
         <select id="practice-dropdown" name="dropdown" onChange={handleDropdownChange} className="practice-dropdown">
           <option value="" className="select-flashcard">Flash Cards</option>
-          <option value="" className="select-flashcard">Verbal</option>
-          <option value="" className="select-flashcard">Quant</option>
+          <option value="/flashcards-verbal" className="select-flashcard">Verbal</option>
+          <option value="/flashcards-quant" className="select-flashcard">Quant</option>
         </select>
         <a href="/premium" className="navbar-premium">Go Premium</a>
         <a href="/login">Login</a>
