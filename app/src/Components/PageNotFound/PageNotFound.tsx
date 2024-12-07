@@ -1,5 +1,7 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
+import Button from "@mui/material/Button";
+import Typography from "@mui/material/Typography";
 import "./PageNotFound.css";
 
 const PageNotFound: React.FC = () => {
@@ -7,9 +9,20 @@ const PageNotFound: React.FC = () => {
 
   return (
     <div className="page-not-found">
-      <h1>404 - Page Not Found</h1>
-      <p>The page you are looking for does not exist.</p>
-      <button onClick={() => navigate("/")}>Go to Homepage</button>
+      <Typography variant="h1" className="title">
+        404 - Page Not Found
+      </Typography>
+      <Typography variant="body1" className="message">
+        The page you are looking for does not exist.
+      </Typography>
+      <Button
+        variant="contained"
+        color="primary"
+        onClick={() => navigate("/")}
+        className="home-button"
+      >
+        Go to Homepage
+      </Button>
     </div>
   );
 };
