@@ -3,11 +3,13 @@ import initializeRoutes from "./routes/index.js";
 import userRoutes from './routes/userRoutes.js';
 import express from "express";
 import cors from "cors";
-
+import testRoutes from "./routes/testRoutes.js";
 const initialize = (app) => {
   app.use(cors());
   app.use(express.json());
   app.use('/api', userRoutes);
+  app.use('/', testRoutes); // Mount the testRoutes on the  path
+
   app.use(express.urlencoded());
   mongoose
     .connect(process.env.MONGODB_URI, {
