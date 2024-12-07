@@ -90,9 +90,17 @@
 }
 
 .select-flashcard{
+  background-color: white;
+  color: grey;
+}
+.select-option{
   background-color: gray;
+  color: black;
+  font-size:x-large;
+  font-weight: bold;
 }
  
+.sale
 .navbar-signout a:hover, .practice-dropdown:hover {
   background: linear-gradient(90deg, #45a049, #3d8e43);
   transform: translateY(-3px);
