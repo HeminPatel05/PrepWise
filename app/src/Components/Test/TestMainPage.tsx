@@ -8,8 +8,9 @@ import {
   Card,
   CardContent,
   CardActions,
-  LinearProgress,
+  CircularProgress,
   Grid,
+  Avatar,
 } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
@@ -26,9 +27,7 @@ interface Test {
   inProgress?: boolean;
 }
 
-// Main component for the Home Page
 const TestMainPage: React.FC = () => {
-  // Initial test data
   const initialTests: Test[] = [
     { id: 1, name: 'Test 1', completed: false },
     { id: 2, name: 'Test 2', completed: false },
@@ -39,10 +38,11 @@ const TestMainPage: React.FC = () => {
   const [error, setError] = useState<string | null>(null);
 
   const dispatch = useDispatch();
-  const currentTestIndex = useSelector((state: RootState) => state.test.currentTestIndex);
+  const currentTestIndex = useSelector(
+    (state: RootState) => state.test?.currentTestIndex ?? 0
+  ); // Safeguard against undefined state
   const navigate = useNavigate();
 
-  // Effect to load tests from localStorage or use initial tests
   useEffect(() => {
     const savedTests = localStorage.getItem('tests');
     if (savedTests) {
@@ -59,22 +59,25 @@ const TestMainPage: React.FC = () => {
     } else {
       setTests(initialTests);
     }
-  }, []);
 
-  // Function to save tests to localStorage
+    // Initialize Redux state if saved in localStorage
+    const savedIndex = localStorage.getItem('currentTestIndex');
+    if (savedIndex) {
+      dispatch(setCurrentTestIndex(parseInt(savedIndex, 10)));
+    }
+  }, [dispatch]);
+
   const saveTestsToLocalStorage = (updatedTests: Test[]) => {
     localStorage.setItem('tests', JSON.stringify(updatedTests));
     setTests(updatedTests);
   };
 
-  // Function to handle starting a test
   const handleTestStart = (testId: number) => {
     if (testId < 1 || testId > tests.length) {
       setError('Invalid test ID.');
       return;
     }
 
-    // Check if previous test is completed
     if (testId > 1 && !tests[testId - 2].completed) {
       setError(`Please complete ${tests[testId - 2].name} before starting this test.`);
       return;
@@ -82,14 +85,13 @@ const TestMainPage: React.FC = () => {
 
     const testIndex = testId - 1;
     dispatch(setCurrentTestIndex(testIndex));
+    localStorage.setItem('currentTestIndex', testIndex.toString());
 
-    // Update test status to in progress
     const updatedTests = tests.map((test) =>
       test.id === testId ? { ...test, inProgress: true } : test
     );
     saveTestsToLocalStorage(updatedTests);
 
-    // Simulate test completion after 1 second
     setTimeout(() => {
       const completedTests = updatedTests.map((test) =>
         test.id === testId ? { ...test, completed: true, inProgress: false } : test
@@ -100,107 +102,98 @@ const TestMainPage: React.FC = () => {
     }, 1000);
   };
 
-  // Function to handle viewing test results
   const handleViewResults = (testId: number) => {
     navigate(`/test/results/${testId}`);
   };
 
   return (
-    <Container maxWidth="md" sx={{ py: 4 }}>
-      <Typography
-        variant="h3"
-        align="center"
-        gutterBottom
-        sx={{ fontWeight: 'bold', color: 'primary.main', mb: 4 }}
-      >
-        Test Dashboard
+    <Container maxWidth="sm" sx={{ py: 4 }}>
+      <Typography variant="h4" align="center" sx={{ fontWeight: 'bold', mb: 4 }}>
+        Your Tests
       </Typography>
       {error && (
         <Alert severity="error" onClose={() => setError(null)} sx={{ mb: 3 }}>
           {error}
         </Alert>
       )}
-      <Grid container spacing={4}>
+      <Grid container spacing={3}>
         {tests.map((test) => (
-          <Grid item xs={12} sm={6} key={test.id}>
+          <Grid item xs={12} key={test.id}>
             <Card
-              elevation={3}
               sx={{
-                borderRadius: '16px',
-                transition: 'transform .3s ease-in-out',
-                '&:hover': { transform: 'translateY(-5px)', boxShadow: '0px 8px 20px rgba(0,0,0,0.15)' },
+                borderRadius: 2,
+                p: 2,
+                backgroundColor: test.completed
+                  ? '#e8f5e9'
+                  : test.inProgress
+                  ? '#fff8e1'
+                  : '#ffebee',
+                boxShadow: '0px 4px 12px rgba(0,0,0,0.1)',
               }}
             >
-              <CardContent>
-                <Typography
-                  variant="h5"
-                  gutterBottom
-                  sx={{ fontWeight: 'bold', color: test.completed ? 'green' : 'text.primary' }}
+              <Box display="flex" alignItems="center">
+                <Avatar
+                  sx={{
+                    backgroundColor: test.completed
+                      ? '#4caf50'
+                      : test.inProgress
+                      ? '#ff9800'
+                      : '#f44336',
+                    mr: 2,
+                  }}
                 >
+                  {test.completed ? (
+                    <CheckCircleOutlineIcon />
+                  ) : test.inProgress ? (
+                    <AccessTimeIcon />
+                  ) : (
+                    <ErrorOutlineIcon />
+                  )}
+                </Avatar>
+                <Typography variant="h6" sx={{ flexGrow: 1 }}>
                   {test.name}
                 </Typography>
-                <Box display="flex" alignItems="center" gap={1} mb={2}>
-                  {/* Display test status icon and text */}
-                  {test.completed ? (
-                    <>
-                      <CheckCircleOutlineIcon color="success" />
-                      <Typography variant="body2" color="text.secondary">
-                        Completed
-                      </Typography>
-                    </>
-                  ) : test.inProgress ? (
-                    <>
-                      <AccessTimeIcon color="warning" />
-                      <Typography variant="body2" color="text.secondary">
-                        In Progress
-                      </Typography>
-                    </>
-                  ) : (
-                    <>
-                      <ErrorOutlineIcon color="error" />
-                      <Typography variant="body2" color="text.secondary">
-                        Not Started
-                      </Typography>
-                    </>
-                  )}
+              </Box>
+              <Box display="flex" justifyContent="space-between" alignItems="center" mt={2}>
+                <Box>
+                  <Typography
+                    variant="body2"
+                    sx={{ color: test.completed ? 'green' : 'text.secondary' }}
+                  >
+                    {test.completed
+                      ? 'Completed'
+                      : test.inProgress
+                      ? 'In Progress'
+                      : 'Not Started'}
+                  </Typography>
                 </Box>
-                {/* Progress bar for test completion */}
-                <LinearProgress
+                <CircularProgress
                   variant="determinate"
                   value={test.completed ? 100 : test.inProgress ? 50 : 0}
+                  size={40}
                   sx={{
-                    height: '10px',
-                    borderRadius: '5px',
-                    backgroundColor: '#e0e0e0',
-                    '& .MuiLinearProgress-bar': {
-                      backgroundColor:
-                        test.completed ? '#4caf50' : test.inProgress ? '#ff9800' : '#f44336',
-                    },
+                    color: test.completed ? '#4caf50' : test.inProgress ? '#ff9800' : '#f44336',
                   }}
                 />
-              </CardContent>
-              <CardActions>
-                {/* Button to start or retake the test */}
+              </Box>
+              <CardActions sx={{ justifyContent: 'space-between', mt: 2 }}>
                 <Button
                   variant="contained"
                   fullWidth
                   onClick={() => handleTestStart(test.id)}
                   disabled={test.inProgress}
                   sx={{
-                    textTransform: 'none',
-                    fontWeight: 'bold',
                     backgroundColor: test.completed ? '#4caf50' : undefined,
                     '&:hover': { backgroundColor: test.completed ? '#45a049' : undefined },
                   }}
                 >
-                  {test.completed ? 'Retake Test' : test.inProgress ? 'In Progress' : 'Start Test'}
+                  {test.completed ? 'Retake Test' : 'Start Test'}
                 </Button>
-                {/* Button to view test results */}
                 <Button
                   variant="outlined"
                   fullWidth
                   onClick={() => handleViewResults(test.id)}
-                  sx={{ textTransform: 'none', fontWeight: 'bold' }}
+                  sx={{ textTransform: 'none' }}
                 >
                   View Results
                 </Button>
