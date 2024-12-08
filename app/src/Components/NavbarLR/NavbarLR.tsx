@@ -53,6 +53,7 @@ const Navbar: React.FC = () => {
           <option value="de">Deut</option>
           {/* Add more languages here */}
         </select>
+        
         <a href="/premium" className="navbar-premium">Go Premium</a>
         {/* Conditionally render Login or Logout */}
         {!isAuthenticated ? (
@@ -60,7 +61,9 @@ const Navbar: React.FC = () => {
         ) : (
           <a onClick={handleLogout} style={{ cursor: "pointer" }}>Log out</a>
         )}
+        
       </div>
+      
     </div>
   );
 };
