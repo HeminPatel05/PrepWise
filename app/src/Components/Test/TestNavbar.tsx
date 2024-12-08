@@ -28,17 +28,13 @@ const TestNavbar: React.FC<NavbarProps> = ({ onPrevious, onNext, onEndSection, o
         justifyContent: 'space-between', 
         alignItems: 'center', 
         width: '100%', 
-        position: 'fixed', 
-        top: 0, 
-        left: 0, 
-        zIndex: 1000,  
+        marginTop: '20px', // Add margin-top to space out the navbar from the question card
       }}
     >
-      <Typography variant="h6" sx={{ color: 'black' }}>
+      <Typography variant="h6" sx={{ color: 'black', marginTop: '10px' }}>
         Time Remaining: {formatTime(timer)} {/* Display formatted time */}
       </Typography>
       <Box>
-        
         <Button
           onClick={onPrevious} 
           variant="contained"
@@ -53,7 +49,6 @@ const TestNavbar: React.FC<NavbarProps> = ({ onPrevious, onNext, onEndSection, o
           Previous
         </Button>
 
-        
         <Button
           onClick={onNext} // Call onNext function when clicked
           variant="contained"
