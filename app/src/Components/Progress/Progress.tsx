@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { useSelector } from "react-redux"; // Import useSelector
 import Stack from "@mui/material/Stack";
 import { Gauge } from "@mui/x-charts/Gauge";
 import Card from "@mui/material/Card";
@@ -14,17 +15,37 @@ import "./Progress.css";
 
 const Progress: React.FC = () => {
   const [timeToAns, setTimeToAns] = useState<number>(0);
-  const [username, setUsername] = useState<string>("HeminPatel");
+  // const [user_id, setUser_id] = useState<string>("6754d3f61ef42bf2a9afb40d");
   const [quesionAttempted, setQuesionAttempted] = useState<number>(50);
   const [correctAns, setCorrectAns] = useState<number>(50);
   const [accuracy, setAccuracy] = useState<number>(50);
   const [summaryResponse, setSummaryResponse] = useState<Summary | null>(null);
   const [sessionResponse, setSessionResponse] = useState<Session[]>([]);
 
+  // Get user_id from Redux store
+  const user_id = useSelector((state: any) => state.user.id); // Adjust path based on your Redux state structure
+
   useEffect(() => {
     const fetchSummary = async () => {
       try {
-        const summary: Summary = await getSummary(username);
+        const summary: Summary = await getSummary(user_id); // Fetch summary using user_id
+        setSummaryResponse(summary);
+        setTimeToAns(summary.average_time_per_question || 0);
+        setQuesionAttempted(summary.total_questions_answered || 0);
+        setCorrectAns(summary.correct_answers || 0);
+        setAccuracy(summary.accuracy || 0);
+      } catch (error) {
+        console.error("Error fetching summary:", error);
+      }
+    };
+
+    fetchSummary();
+  }, [user_id]); // Dependency on user_id
+
+  useEffect(() => {
+    const fetchSummary = async () => {
+      try {
+        const summary: Summary = await getSummary(user_id);
         setSummaryResponse(summary);
         setTimeToAns(summary.average_time_per_question || 0);
         setQuesionAttempted(summary.total_questions_answered || 0);
@@ -41,7 +62,7 @@ const Progress: React.FC = () => {
   useEffect(() => {
     const fetchSessions = async () => {
       try {
-        const sessions: Session[] = await getSessions(username);
+        const sessions: Session[] = await getSessions(user_id);
         setSessionResponse(sessions);
       } catch (error) {
         if (error instanceof Error) {
