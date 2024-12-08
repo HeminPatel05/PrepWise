@@ -35,12 +35,13 @@ const Navbar: React.FC = () => {
     <div className="navbar">
       <a href="/homepage" className="navbar-logo">Prepwise</a>
       <div className="navbar-signout">
-        <a href="/profile">Profile</a>
+        <a href="/tests">Tests</a>
         <select id="practice-dropdown" name="dropdown" onChange={handleDropdownChange} className="practice-dropdown">
-          <option value="" disabled selected>Flash Card</option>
+          <option value="" disabled selected>Practice</option>
           <option value="/flashcards-verbal">Verbal</option>
           <option value="/flashcards-quant">Quant</option>
         </select>
+
         <select
           id="language-dropdown"
           name="language"
@@ -59,11 +60,9 @@ const Navbar: React.FC = () => {
         {!isAuthenticated ? (
           <a href="/login">Login</a>
         ) : (
-          <a onClick={handleLogout} style={{ cursor: "pointer" }}>Log out</a>
-        )}
-        
+          <a onClick={handleLogout} style={{ cursor: "pointer" }}  href="/homepage">Log out</a>
+        )}  
       </div>
-      
     </div>
   );
 };
