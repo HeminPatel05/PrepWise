@@ -134,7 +134,7 @@ const Flashcards: React.FC = () => {
       navigate(location.pathname, { state: { type, index: 0 } });
     } else {
       alert("Quiz completed! Thank you for participating.");
-      navigate("/flashcards/FlashcardsQuantPage");
+      navigate("/homepage");
     }
     setLock(false);
   };
