@@ -1,20 +1,21 @@
-import React, { useState, useEffect } from 'react';
-import { Container, Typography, Button, Box } from '@mui/material';
+import React, { useEffect } from 'react';
+import { Container, Typography, Button, Box, Paper } from '@mui/material';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import { RootState } from './redux/store'; // Import RootState for useSelector
+import { RootState } from './redux/store';
 
-// Component for displaying test instructions
 const TestInstructionsPage: React.FC = () => {
   const { testId } = useParams<{ testId: string }>();
   const navigate = useNavigate();
 
-  // Access the currentTestIndex from Redux
-  const currentTestIndex = useSelector((state: RootState) => state.test.currentTestIndex);
+  // Access the currentTestIndex from Redux, with a fallback to avoid errors
+  const currentTestIndex = useSelector(
+    (state: RootState) => state.test?.currentTestIndex ?? -1
+  );
 
-  // Log currentTestIndex to the console on every render
+  // Log currentTestIndex to the console for debugging
   useEffect(() => {
-    console.log('currentTestId:', currentTestIndex);
+    console.log('Current Test Index:', currentTestIndex);
   }, [currentTestIndex]);
 
   // Function to handle starting the test
@@ -26,10 +27,10 @@ const TestInstructionsPage: React.FC = () => {
     navigate(`/test/${testId}`);
   };
 
-  // Display error message if testId is missing
+  // Display error message if testId is missing or invalid
   if (!testId) {
     return (
-      <Container>
+      <Container className="test-wrapper">
         <Typography variant="h5" color="error" align="center">
           Invalid Test ID
         </Typography>
@@ -38,26 +39,32 @@ const TestInstructionsPage: React.FC = () => {
   }
 
   return (
-    <Container>
-      <Typography variant="h3" align="center" gutterBottom>
-        Instructions for Test {testId}
-      </Typography>
-      <Box marginY={2}>
-        <Typography variant="body1">
+    <Container className="test-wrapper">
+      {/* Instructions container */}
+      <Paper elevation={3} className="instructions-container">
+        <Typography variant="h4" className="instructions-title" align="center" gutterBottom>
+          Instructions for Test {testId}
+        </Typography>
+        <Typography variant="body1" className="instructions-text" gutterBottom>
           Please carefully read the following instructions:
         </Typography>
-        <ul>
+        <ul className="instructions-list">
           <li>The Quant section must be completed within 18 minutes.</li>
           <li>The Verbal section must be completed within 12 minutes.</li>
           <li>
-            Each question has a specific difficulty level, and scores will be
-            calculated based on the correctness of answers.
+            Each question has a specific difficulty level, and scores will be calculated based on
+            the correctness of answers.
           </li>
         </ul>
-      </Box>
+      </Paper>
       {/* Button to start the test */}
-      <Box display="flex" justifyContent="center" marginTop={3}>
-        <Button variant="contained" color="primary" onClick={handleStartTest}>
+      <Box display="flex" justifyContent="center" marginTop={4}>
+        <Button
+          variant="contained"
+          color="primary"
+          className="start-test-button"
+          onClick={handleStartTest}
+        >
           Start Test
         </Button>
       </Box>
