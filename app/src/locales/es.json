@@ -1,0 +1,88 @@
+{
+    "home": {
+      "hero": {
+        "title": "Bienvenido a Prepwise",
+        "subtitle1": "La mejor herramienta de preparación para el GRE",
+        "subtitle2": "¡Tu camino hacia el éxito comienza aquí!",
+        "cta": "Comienza ahora",
+        "imageAlt": "Preparación para el GRE"
+      },
+      "features": {
+        "title": "¿Por qué elegirnos?",
+        "alt": {
+          "feature1": "Característica 1",
+          "feature2": "Característica 2",
+          "feature3": "Característica 3"
+        },
+        "accessible": {
+          "title": "Accesible",
+          "point1": "Estudia a tu propio ritmo con preparación autodidacta o clases a demanda",
+          "point2": "Asistencia por correo electrónico siempre que sea necesario",
+          "point3": "Accede desde cualquier lugar y en cualquier momento con nuestras aplicaciones móviles o de escritorio"
+        },
+        "effective": {
+          "title": "Eficaz",
+          "point1": "Material de estudio de alta calidad, continuamente actualizado según las respuestas de estudiantes anteriores",
+          "point2": "Comentarios inteligentes y seguimiento del progreso para convertir tus debilidades en fortalezas"
+        },
+        "affordable": {
+          "title": "Asequible",
+          "description": "Precio imbatible en preparación para exámenes: ¼ del precio de los competidores"
+        },
+        "comprehensive": {
+          "title": "Práctica integral",
+          "description": "Accede a miles de preguntas adaptadas a tus objetivos del GRE."
+        },
+        "expert": {
+          "title": "Consejos de expertos",
+          "description": "Aprende con explicaciones detalladas y consejos de expertos."
+        },
+        "progress": {
+          "title": "Rastrea tu progreso",
+          "description": "Monitorea tu rendimiento y observa tu crecimiento con el tiempo."
+        },
+        "feature1": {
+          "title": "Accesible",
+          "description": "Estudia a tu propio ritmo con preparación autodidacta o clases a demanda, asistencia por correo electrónico y acceso móvil/de escritorio.",
+          "imageAlt": "Característica 1"
+        },
+        "feature2": {
+          "title": "Eficaz",
+          "description": "Material de alta calidad, comentarios inteligentes y seguimiento del progreso.",
+          "imageAlt": "Característica 2"
+        },
+        "feature3": {
+          "title": "Asequible",
+          "description": "Precio inmejorable: ¼ del precio de los competidores.",
+          "imageAlt": "Característica 3"
+        }
+      },
+      "reviews": {
+        "title": "Lo que dicen nuestros usuarios",
+        "review1": {
+          "text": "Prepwise fue un cambio radical para mi preparación del GRE.",
+          "author": "- John Doe",
+          "rating": "⭐⭐⭐⭐⭐"
+        },
+        "review2": {
+          "text": "¡Las explicaciones detalladas fueron increíbles!",
+          "author": "- Jane Smith",
+          "rating": "⭐⭐⭐⭐⭐"
+        },
+        "review3": {
+          "text": "¡Me encanta la aplicación móvil!",
+          "author": "- Mark Wilson",
+          "rating": "⭐⭐⭐⭐"
+        }
+      },
+      "premium": {
+        "title": "Desbloquea características premium",
+        "description": "Lleva tu preparación para el GRE al siguiente nivel.",
+        "cta": "Ve Premium"
+      },
+      "footer": {
+        "text": "© 2024 GRE Prep Master. Todos los derechos reservados."
+      }
+    }
+  }
+  

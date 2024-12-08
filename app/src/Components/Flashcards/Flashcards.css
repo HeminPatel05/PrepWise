@@ -1,0 +1,227 @@
+/* General body styling */
+body {
+    background-color: #f0f0f0; /* Light background for the whole page */
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+/* Main container styling */
+.container {
+    width: 80%;
+    max-width: 70%;
+    margin: auto;
+    margin-top: 5vh;
+    background: #ffffff; /* White background for the container */
+    color: #555; /* Slightly darker text color for readability */
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 2%;
+    border-radius: 1vw;
+    padding: 4vh 5%;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Soft shadow */
+}
+
+/* Section for the quiz */
+.quiz-section {
+    flex: 1 1 60%;
+}
+
+/* Section for the chart */
+.chart-section {
+    flex: 1 1 35%;
+    background-color: #fafafa;
+    border-radius: 1vw;
+    padding: 2vh;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Adjusting chart size */
+.chart-section canvas {
+    width: 100%;
+    max-height: 30vh; /* Reduced height while maintaining proportions */
+}
+
+/* Chart heading */
+.chart-section h2 {
+    text-align: center;
+    font-size: 2.2vh;
+    color: #333;
+    margin-bottom: 2vh;
+}
+
+/* Horizontal divider */
+.container hr {
+    height: 0.2vh;
+    border: none;
+    background: #e0e0e0; /* Light gray divider */
+}
+
+/* Question heading */
+.container h2 {
+    font-size: 2.4vh;
+    font-weight: 500;
+    color: #333;
+    margin-bottom: 1vh;
+}
+
+/* List of options */
+.container ul {
+    list-style: none;
+    padding: 0;
+}
+
+.container ul li {
+    display: flex;
+    align-items: center;
+    height: 6vh;
+    padding-left: 1.5%;
+    border: 0.1vh solid #ccc; /* Light border */
+    border-radius: 0.8vw;
+    margin-bottom: 1.5vh;
+    font-size: 1.8vh;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.container ul li:hover {
+    background-color: #f7f7f7; /* Light hover effect */
+    transform: scale(1.02);
+}
+
+/* Correct and wrong answer styles */
+.container .correct {
+    background: #d4f7d4;
+    border-color: #4CAF50;
+}
+
+.container .wrong {
+    background: #f8d7da;
+    border-color: #e74c3c;
+    animation: shake 0.5s ease-in-out, fadeOut 2s ease-in-out;
+}
+
+/* Explanation section */
+.explanation {
+    display: none; /* Initially hidden */
+    background-color: #fff8f8; /* Lighter red tone for softer look */
+    padding: 2vh 2.5%;
+    border-radius: 1.2vw;
+    font-size: 1.8vh;
+    color: #444; /* Darker text color */
+    margin-top: 2.5vh;
+    border: 0.2vh solid #ff6b6b; /* Darker red border for emphasis */
+    box-shadow: 0 0 1.2vw rgba(255, 107, 107, 0.5);
+    transition: all 0.3s ease-in-out;
+    opacity: 0; /* Initially hidden */
+}
+
+/* Explanation when visible */
+.explanation.show {
+    display: block;
+    opacity: 1;
+    animation: slideIn 1s ease-out, fadeIn 0.5s ease;
+}
+
+/* Explanation highlight */
+.highlight {
+    color: #4caf50;
+    font-weight: bold;
+}
+
+/* Animations for wrong answers */
+@keyframes shake {
+    0% { transform: translateX(0); }
+    25% { transform: translateX(-1vw); }
+    50% { transform: translateX(1vw); }
+    75% { transform: translateX(-1vw); }
+    100% { transform: translateX(0); }
+}
+
+@keyframes fadeOut {
+    0% { opacity: 1; }
+    100% { opacity: 0; }
+}
+
+/* Animations for explanations */
+@keyframes slideIn {
+    0% {
+        transform: translateY(-2vh);
+        opacity: 0;
+    }
+    100% {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+@keyframes fadeIn {
+    0% { opacity: 0; }
+    100% { opacity: 1; }
+}
+
+/* Buttons */
+.container button {
+    margin: auto;
+    width: 25%;
+    height: 5vh;
+    background: #4CAF50; /* Green button */
+    color: white;
+    font-size: 1.8vh;
+    font-weight: 500;
+    border-radius: 0.8vw;
+    border: 0.1vh solid #4CAF50;
+    text-align: center;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.container button:hover {
+    background-color: #45a049; /* Darker green on hover */
+    transform: scale(1.05);
+}
+
+.container button:focus {
+    outline: none;
+    box-shadow: 0 0 1vw rgba(76, 175, 80, 0.6); /* Focus effect for accessibility */
+}
+
+/* Responsive adjustments */
+@media screen and (max-width: 768px) {
+    .container {
+        flex-direction: column;
+        gap: 3vh;
+        padding: 2vh;
+    }
+
+    .quiz-section,
+    .chart-section {
+        flex: 1 1 100%; /* Full width for smaller screens */
+    }
+
+    .chart-section canvas {
+        max-height: 25vh; /* Adjust height for smaller screens */
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .container ul li {
+        font-size: 1.6vh;
+        height: 5vh;
+    }
+
+    .container button {
+        width: 20%;
+        font-size: 1.6vh;
+        height: 4.5vh;
+    }
+
+    .chart-section canvas {
+        max-height: 20vh; /* Further reduce chart height for very small screens */
+    }
+}

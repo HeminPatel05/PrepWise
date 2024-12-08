@@ -1,0 +1,138 @@
+/* General Navbar styling */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 30px;
+  background-color: #f4f6f9; /* Light, professional greyish background */
+  color: #333; /* Darker text for contrast */
+  font-size: 18px;
+  font-family: "Arial", sans-serif;
+  font-weight: 500;
+  height: 80px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  position: sticky;
+  top: 0;
+  width: 100%;
+  z-index: 1000;
+  border-bottom: 2px solid #e0e0e0; /* Subtle border for a professional look */
+  box-sizing: border-box; /* Ensures padding is included in width */
+  max-width: 100%; /* Ensures navbar stays within the screen width */
+}
+
+/* Navbar Logo */
+.navbar-logo {
+  font-size: 28px;
+  font-weight: bold;
+  color: #2c6b3f; /* Rich, professional dark green */
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);
+}
+
+.navbar-logo:hover {
+  color: #1b5e20; /* Darker green */
+  transform: scale(1.05);
+  transition: all 0.3s ease-in-out;
+}
+
+/* Navbar Links and buttons styling */
+.navbar-links {
+  display: flex;
+  flex: 1;
+  justify-content: center;
+  gap: 30px;
+}
+
+.navbar-links a,
+.navbar-signout a,
+.practice-dropdown,
+.language-dropdown {
+  padding: 12px 24px;
+  border-radius: 25px;
+  background-color: #2e8632; /* Light green with a subtle professional tone */
+  color: white; /* Darker text */
+  font-size: 16px;
+  font-weight: bold;
+  text-decoration: none;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease-in-out;
+}
+
+.navbar-links a:hover,
+.navbar-signout a:hover,
+.practice-dropdown:hover,
+.language-dropdown:hover {
+  background-color: #2e7d32; /* Slightly deeper green on hover */
+  transform: translateY(-2px);
+  box-shadow: 0 6px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Language Dropdown - same styling as buttons */
+.language-dropdown {
+  margin-left: 10px;
+  padding: 12px 24px;
+  font-size: 16px;
+  border: 1px solid #2e7d32;
+  border-radius: 25px;
+  background-color: #2e8632; /* Same background as buttons */
+  color: white;
+  cursor: pointer;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.language-dropdown:hover {
+  border-color: #2e7d32;
+}
+
+.language-dropdown:focus {
+  outline: none;
+  border-color: #388e3c; /* Rich green */
+  box-shadow: 0 0 4px rgba(56, 142, 60, 0.5);
+}
+
+.language-dropdown option {
+  padding: 8px;
+  background-color: #2e7d32; /* Very light green */
+  color: white;
+}
+
+/* Navbar Signout and Practice Dropdown */
+.navbar-signout {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+}
+
+.practice-dropdown {
+  cursor: pointer;
+}
+
+/* Responsive adjustments for smaller screens */
+@media (max-width: 768px) {
+  .navbar {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 10px 20px;
+    height: auto;
+  }
+
+  .navbar-links {
+    justify-content: flex-start;
+    gap: 15px;
+    flex-wrap: wrap;
+    width: 100%; /* Ensures the links stay within the width of the page */
+  }
+
+  .navbar-signout {
+    margin-top: 10px;
+    gap: 10px;
+  }
+
+  .language-dropdown {
+    width: 100%;
+    font-size: 14px;
+  }
+}

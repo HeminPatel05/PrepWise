@@ -1,0 +1,23 @@
+meta {
+  name: Update user information
+  type: http
+  seq: 4
+}
+
+put {
+  url: http://localhost:3000/api/users/674617097d6e7c673de0e2b4
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+      "firstName": "Prayag",
+      "lastName": "Patel",
+      "email": "Prayag123@gmailcom",
+      "mobileNum": 9662345656,
+      "password": "fvwvr3rfvv",
+      "premiumUser": true
+  }
+  
+}

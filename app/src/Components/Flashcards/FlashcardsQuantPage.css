@@ -1,0 +1,136 @@
+/* Global Styles */
+body, html {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  font-family: "Roboto", sans-serif;
+  background: linear-gradient(to bottom right, #f3f4f6, #e5e7eb); /* Gradient background for modern look */
+  color: #333; /* Dark text for contrast */
+  box-sizing: border-box;
+}
+
+/* Container Styling */
+.flashcards-container {
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 40px;
+}
+
+/* Header Styling */
+.flashcards-container h1 {
+  font-size: 42px; /* Increased font size */
+  font-weight: bold;
+  color: #1f2937; /* Darker shade for the header */
+  margin-bottom: 40px;
+  text-align: center;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1); /* Subtle text shadow */
+}
+
+/* Section Styling */
+.section {
+  background: #ffffff; /* White card background */
+  margin: 20px 0;
+  padding: 30px;
+  border-radius: 15px; /* Larger rounding for cards */
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1); /* Stronger shadow for depth */
+  width: 100%;
+  max-width: 850px; /* Slightly wider cards */
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.section:hover {
+  transform: scale(1.02); /* Subtle scale effect on hover */
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15); /* Enhanced shadow on hover */
+}
+
+/* Section Title */
+.section h2 {
+  font-size: 26px; /* Larger font size for section titles */
+  margin-bottom: 15px;
+  font-weight: bold;
+  color: #374151; /* Slightly darker title */
+}
+
+/* Progress Bar Container */
+.progress-container {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 25px;
+  align-items: center; /* Center the progress bar */
+}
+
+.progress-container span {
+  font-size: 18px; /* Slightly larger font size */
+  font-weight: 500;
+  margin-bottom: 10px;
+  color: #6b7280; /* Muted text color */
+}
+
+/* Progress Bar */
+.progress-bar {
+  background-color: #e5e7eb; /* Light gray background */
+  border-radius: 12px;
+  height: 14px; /* Taller progress bar */
+  width: 100%;
+  max-width: 750px;
+  overflow: hidden;
+  position: relative;
+}
+
+.progress-bar-fill {
+  background: linear-gradient(to right, #4caf50, #80e27e); /* Gradient for progress */
+  height: 100%;
+  width: 0;
+  transition: width 0.5s ease; /* Smooth progress animation */
+}
+
+/* Button Styling */
+.study-button {
+  background: linear-gradient(to right, #007bff, #0056b3); /* Gradient blue button */
+  color: white;
+  padding: 15px 25px; /* Ample padding for a premium feel */
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 20px; /* Larger font size */
+  font-weight: bold;
+  align-self: center; /* Center-align button */
+  transition: background-color 0.3s ease, transform 0.2s;
+}
+
+.study-button:hover {
+  background: linear-gradient(to right, #0056b3, #003f7f); /* Darker gradient on hover */
+  transform: scale(1.1); /* Slightly larger on hover */
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2); /* Button shadow on hover */
+}
+
+/* Responsive Design */
+@media screen and (max-width: 768px) {
+  .flashcards-container {
+    padding: 20px;
+  }
+
+  .section {
+    padding: 20px;
+    max-width: 95%; /* Adjust section width for smaller screens */
+  }
+
+  .flashcards-container h1 {
+    font-size: 32px; /* Reduce header size on smaller screens */
+  }
+
+  .progress-container span {
+    font-size: 16px; /* Adjust progress text size */
+  }
+
+  .study-button {
+    font-size: 18px;
+    padding: 12px 20px; /* Adjust button size */
+  }
+}

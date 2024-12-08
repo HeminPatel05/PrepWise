@@ -1,0 +1,19 @@
+.page-not-found {
+  text-align: center;
+  padding: 2rem;
+}
+
+.page-not-found .title {
+  font-size: 2rem;
+  color: #333;
+}
+
+.page-not-found .message {
+  margin: 1rem 0;
+  color: #666;
+}
+
+.page-not-found .home-button {
+  padding: 10px 20px;
+  font-size: 1rem;
+}
