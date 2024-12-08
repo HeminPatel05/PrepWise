@@ -1,10 +1,12 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { stat } from "fs";
 
 interface UserState {
   id: string | null;
   email: string | null;
   firstName: string | null;
   token: string | null;
+  premiumUser: boolean;
 }
 
 const initialState: UserState = {
@@ -12,6 +14,7 @@ const initialState: UserState = {
   email: null,
   firstName: null,
   token: null,
+  premiumUser: false,
 };
 
 const userSlice = createSlice({
@@ -23,12 +26,14 @@ const userSlice = createSlice({
       state.email = action.payload.email;
       state.firstName = action.payload.firstName;
       state.token = action.payload.token;
+      state.premiumUser = action.payload.premiumUser; // Correctly updating premiumUser
     },
     clearUser(state) {
       state.id = null;
       state.email = null;
       state.firstName = null;
       state.token = null;
+      state.premiumUser = false;
     },
   },
 });
