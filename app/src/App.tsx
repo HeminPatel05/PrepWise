@@ -26,7 +26,7 @@ const App: React.FC = () => {
         <div /*style={{ flexGrow: 1 }}*/>
           <Routes>
             {/* Default route renders the FlashcardQuantPage */}
-            <Route path="/" element={<FlashcardQuantPage />} />
+            <Route path="/" element={<HomePage />} />
             {/* Route to render the Flashcards page */}
             <Route path="/flashcards" element={<Flashcards />} />
             <Route path="/flashcards-quant" element={<FlashcardsQuantPage />} />
