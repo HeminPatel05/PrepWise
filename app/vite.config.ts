@@ -1,10 +1,39 @@
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
 import { ProxyOptions } from "vite";
+import { VitePWA } from 'vite-plugin-pwa';
 
 // https://vite.dev/config/
 export default defineConfig({
-  plugins: [react()],
+  plugins: [
+    react(),
+    VitePWA({
+      registerType: 'autoUpdate', // Automatically updates the service worker
+      manifest: {
+        name: 'GRE Test Prep',
+        short_name: 'GRE Prep',
+        start_url: '/',
+        display: 'standalone',
+        background_color: '#ffffff',
+        theme_color: '#4a90e2',
+        icons: [
+          {
+            src: 'icon-192x192.png',
+            sizes: '192x192',
+            type: 'image/png',
+          },
+          {
+            src: 'icon-512x512.png',
+            sizes: '512x512',
+            type: 'image/png',
+          },
+        ],
+      },
+      devOptions: {
+        enabled: true, // Enables PWA functionality in development mode
+      },
+    }),
+  ],
   server: {
     proxy: {
       "/flashcards": {
