@@ -1,15 +1,31 @@
-import React, { useState } from "react";
+import React from "react";
 import "./PaymentGateway.css";
 import { makePayment } from "../../services/payment-service";
+import { useAppSelector } from "../../services/hooks"; // Import custom typed hook
+import { useSelector } from "react-redux";
+import { RootState } from "../../services/store";
 
 const PaymentGateway: React.FC = () => {
-  const [customerEmail, SetCustomerEmail] = useState<String>("");
+  const customerEmail = useAppSelector((state) => state.user.email);
+  const user = useSelector((state: RootState) => state.user);
+  const { id: userId, token } = user;
+
+  console.log("userdata:::::: " + userId);
 
   const handlePayment = async () => {
-    const customer_email = "a@mail.com";
+    if (!customerEmail) {
+      console.error("Customer email is not available in Redux state.");
+      return;
+    }
 
-    console.log("Payment");
-    makePayment({ customer_email: customer_email });
+    console.log("Initiating payment for:", customerEmail);
+    try {
+      await makePayment({ customer_email: customerEmail }); // Pass the email dynamically
+      alert("Payment initiated successfully!");
+    } catch (error) {
+      console.error("Error initiating payment:", error);
+      alert("Failed to initiate payment. Please try again.");
+    }
   };
   return (
     <div className="payment-container">

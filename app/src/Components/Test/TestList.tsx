@@ -1,68 +1,147 @@
 import React, { useState, useEffect } from 'react';
-import { Button, Box, Typography, Paper } from '@mui/material';
-import { useNavigate } from 'react-router-dom';
+import { Button, Box, Typography, Paper, Stack, Alert, CircularProgress } from '@mui/material';
+import { useNavigate, useLocation } from 'react-router-dom';
 
-// Define type for a test
 interface Test {
-  _id: string; 
-  testName: string; 
+  _id: string;
+  testName: string;
+  isCompleted: boolean;
 }
 
+// Main component for displaying the list of available tests
 const TestList: React.FC = () => {
   const navigate = useNavigate();
+  const location = useLocation();
 
-  // State variables for tests, loading status, and errors
-  const [tests, setTests] = useState<Test[]>([]); // State to store the list of tests
-  const [loading, setLoading] = useState<boolean>(true); // State to track loading status
-  const [error, setError] = useState<string | null>(null); // State to store any errors
+  const [tests, setTests] = useState<Test[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
+  const [error, setError] = useState<string | null>(null);
 
+  // Fetch tests and their completion status
   useEffect(() => {
-    // Fetch tests from the backend when the component mounts
     const fetchTests = async () => {
       try {
-        const response = await fetch('http://localhost:3000/test'); // API call to fetch the tests
-        if (!response.ok) throw new Error('Failed to fetch tests'); // Throw error if the response is not ok
-        const data = await response.json(); // Parse the response data
-        setTests(data); // Set the fetched data to the state
+        setLoading(true);
+
+        // Fetch all tests
+        const response = await fetch('http://localhost:3000/test');
+        if (!response.ok) throw new Error('Failed to fetch tests');
+        const data: Test[] = await response.json();
+
+        // Fetch status for each test
+        const testsWithStatus = await Promise.allSettled(
+          data.map(async (test) => {
+            try {
+              const statusResponse = await fetch(`http://localhost:3000/test/${test._id}/status`);
+              if (!statusResponse.ok) throw new Error('Failed to fetch status');
+              const statusData = await statusResponse.json();
+              return { ...test, isCompleted: statusData.isCompleted };
+            } catch {
+              return { ...test, isCompleted: false }; // Default to false if status fetch fails
+            }
+          })
+        );
+
+        // Process the results of status fetching
+        const validTests = testsWithStatus.map((result, index) => {
+          if (result.status === 'fulfilled') {
+            return result.value;
+          } else {
+            console.warn(`Failed to fetch status for test ${data[index]._id}`);
+            return { ...data[index], isCompleted: false };
+          }
+        });
+
+        setTests(validTests);
       } catch (err: any) {
-        setError(err.message); // Set error if fetch fails
+        setError(err.message || 'An unexpected error occurred.');
       } finally {
-        setLoading(false); // Set loading state to false after fetching is done
+        setLoading(false);
       }
     };
 
-    fetchTests(); // Invoke the function to fetch tests
-  }, []); // Empty dependency array means this will run only once when the component mounts
+    fetchTests();
+  }, [location]);
 
-  const handleStartTest = (testId: string) => {
-    // Navigate to the specific test page using the test's ObjectId
-    navigate(`/test/${testId}`);
+  // Handle starting a test
+  const handleStartTest = (index: number) => {
+    if (index > 0 && !tests[index - 1]?.isCompleted) {
+      setError(`Please complete ${tests[index - 1]?.testName} before starting this test.`);
+      return;
+    }
+
+    navigate(`/test/${tests[index]._id}`);
   };
 
-  if (loading) return <Typography>Loading tests...</Typography>; // Show loading message while fetching
-  if (error) return <Typography color="error">Error: {error}</Typography>; // Show error message if fetching fails
+  // Display loading spinner while fetching data
+  if (loading) {
+    return (
+      <Box display="flex" justifyContent="center" alignItems="center" height="100vh">
+        <CircularProgress />
+      </Box>
+    );
+  }
+
+  // Display error message if fetch failed
+  if (error) {
+    return (
+      <Box sx={{ padding: '2rem' }}>
+        <Alert severity="error" onClose={() => setError(null)}>
+          {error}
+        </Alert>
+      </Box>
+    );
+  }
 
   return (
     <Box sx={{ padding: '2rem' }}>
       <Typography variant="h4" gutterBottom>
         Available Tests
       </Typography>
-      <Box>
-        {/* Map through the tests and render them */}
-        {tests.map((test) => (
-          <Paper key={test._id} sx={{ marginBottom: '1rem', padding: '1rem' }}>
-            <Typography variant="h6">{test.testName}</Typography>
-            <Button
-              variant="contained"
-              color="primary"
-              sx={{ marginTop: '0.5rem' }}
-              onClick={() => handleStartTest(test._id)} // On click, navigate to the test page
+      {error && (
+        <Alert severity="error" onClose={() => setError(null)}>
+          {error}
+        </Alert>
+      )}
+      {tests.length === 0 ? (
+        <Typography>No tests available at the moment.</Typography>
+      ) : (
+        <Box>
+          {tests.map((test, index) => (
+            <Paper
+              key={test._id}
+              sx={{
+                marginBottom: '1rem',
+                padding: '1rem',
+                backgroundColor: '#f5f5f5',
+              }}
             >
-              Start Test
-            </Button>
-          </Paper>
-        ))}
-      </Box>
+              <Typography variant="h6" sx={{ marginBottom: '0.5rem' }}>
+                {test.testName}
+              </Typography>
+              <Stack direction="row" spacing={2}>
+                {/* Button to start or view completed test */}
+                <Button
+                  variant="contained"
+                  color="primary"
+                  onClick={() => handleStartTest(index)}
+                  disabled={index > 0 && !tests[index - 1]?.isCompleted}
+                >
+                  {test.isCompleted ? 'Completed' : 'Start Test'}
+                </Button>
+                {/* Button to view test results */}
+                <Button
+                  variant="outlined"
+                  color="primary"
+                  onClick={() => navigate(`/results/${test._id}`)}
+                >
+                  View Results
+                </Button>
+              </Stack>
+            </Paper>
+          ))}
+        </Box>
+      )}
     </Box>
   );
 };

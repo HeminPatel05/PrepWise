@@ -2,24 +2,29 @@ import React, { useEffect, useState } from "react";
 import "./Success.css";
 import { savePayment } from "../../services/payment-service";
 import { upgradeToPremium } from "../../services/api";
-// import { savePayment } from "../../services/payment-service.ts";
+import { useAppSelector } from "../../services/hooks"; // Import custom typed hook
 
 const Success = () => {
+  // Get user_id from Redux state
+  const userId = useAppSelector((state) => state.user.id);
+
+  // Get session_id from query parameters
   const queryParams = new URLSearchParams(location.search);
-  const session_id1 = queryParams.get("session_id");
-  const session_id = queryParams.get("session_id") ?? "";
+  const sessionId = queryParams.get("session_id") ?? "";
 
-  console.log("Session id1::= " + session_id1);
-  console.log("Session id::= " + session_id);
-
-  const user_id = "6750e4745e277a332f4f8515";
-  const [isPremium, setIsPremium] = useState<Boolean>(false);
+  console.log("Session ID:", sessionId);
+  console.log("User ID from Redux:", userId);
 
   useEffect(() => {
-    console.log("calling success effect");
-    savePayment({ session_id: session_id, user_id: "Hemin" });
-    upgradeToPremium({ user_id });
-  }, [session_id]);
+    if (!userId || !sessionId) {
+      console.error("Missing user ID or session ID.");
+      return;
+    }
+
+    console.log("Calling success effect");
+    savePayment({ session_id: sessionId, user_id: userId }); // Use Redux user ID
+    upgradeToPremium({ user_id: userId }); // Use Redux user ID
+  }, [userId, sessionId]);
 
   return (
     <div className="success-container">

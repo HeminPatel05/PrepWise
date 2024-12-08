@@ -120,26 +120,25 @@ const HomePage: React.FC = () => {
 
       {/* Reviews Section */}
       <section className="reviews">
-  <h2>{t("home.reviews.title")}</h2>
-  <div className="review-cards">
-    <div className="review-card">
-      <p>{t("home.reviews.review1.text")}</p>
-      <h4>{t("home.reviews.review1.author")}</h4>
-      <div className="rating">{t("home.reviews.review1.rating")}</div>
-    </div>
-    <div className="review-card">
-      <p>{t("home.reviews.review2.text")}</p>
-      <h4>{t("home.reviews.review2.author")}</h4>
-      <div className="rating">{t("home.reviews.review2.rating")}</div>
-    </div>
-    <div className="review-card">
-      <p>{t("home.reviews.review3.text")}</p>
-      <h4>{t("home.reviews.review3.author")}</h4>
-      <div className="rating">{t("home.reviews.review3.rating")}</div>
-    </div>
-  </div>
-</section>
-
+        <h2>{t("home.reviews.title")}</h2>
+        <div className="review-cards">
+          <div className="review-card">
+            <p>{t("home.reviews.review1.text")}</p>
+            <h4>{t("home.reviews.review1.author")}</h4>
+            <div className="rating">{t("home.reviews.review1.rating")}</div>
+          </div>
+          <div className="review-card">
+            <p>{t("home.reviews.review2.text")}</p>
+            <h4>{t("home.reviews.review2.author")}</h4>
+            <div className="rating">{t("home.reviews.review2.rating")}</div>
+          </div>
+          <div className="review-card">
+            <p>{t("home.reviews.review3.text")}</p>
+            <h4>{t("home.reviews.review3.author")}</h4>
+            <div className="rating">{t("home.reviews.review3.rating")}</div>
+          </div>
+        </div>
+      </section>
 
       {/* Premium Section */}
       <section className="premium">
@@ -148,9 +147,7 @@ const HomePage: React.FC = () => {
           <p>{t("home.premium.description")}</p>
         </div>
         <div className="premium-right">
-          <button className="premium-button">
-            {t("home.premium.cta")}
-          </button>
+          <button className="premium-button">{t("home.premium.cta")}</button>
         </div>
       </section>
 

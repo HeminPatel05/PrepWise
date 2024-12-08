@@ -29,7 +29,7 @@ const TestResult: React.FC<TestResultProps> = ({
 
   // Function to handle the Exit button click, which navigates to the home page
   const handleExit = () => {
-    navigate('/'); // This will navigate to HomePage
+    navigate('/test'); // This will navigate to HomePage
   };
 
   return (

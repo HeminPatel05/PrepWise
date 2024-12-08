@@ -47,7 +47,7 @@ export const createTest = async (testData) => {
 
 import {  Result } from '../models/testModels.js'; // Import both Test and Result models
 
-export const submitTest = async (id, answers, userID) => {
+export const submitTest = async (id, answers) => {
     try {
         // Find the test in the database by ID
         const test = await Test.findById(id);
@@ -88,9 +88,9 @@ export const submitTest = async (id, answers, userID) => {
 
         // Create a result object to store the test result
         const result = new Result({
-            testID: test.testID,
+            testID: test._id,  
             testName: test.testName,
-            userID: userID,
+            //userID: userID,
             totalScore: scores.total,
             quantScore: scores.Quant.total,
             verbalScore: scores.Verbal.total,
@@ -135,6 +135,43 @@ export const updateQuestion = async (testID, sectionName, questionID, updatedQue
     }
 };
 
+  export const fetchAllTests = async () => {
+    try {
+        const tests = await Test.find(); // Assuming Test is a mongoose model
+        if (!tests || tests.length === 0) {
+            throw new Error('No tests found');
+        }
+        return tests; // Return all tests
+    } catch (error) {
+        console.error(`Error fetching tests: ${error.message}`);
+        throw new Error(`Error fetching tests: ${error.message}`);
+    }
+};
+
+// Service to fetch test IDs only
+export const fetchTestIds = async () => {
+    try {
+        const tests = await Test.find();
+        return tests.map(test => test.id); // Only return the IDs of tests
+    } catch (error) {
+        console.error(`Error fetching test IDs: ${error.message}`);
+        throw new Error(`Error fetching test IDs: ${error.message}`);
+    }
+};
+export const fetchResultsByTestID = async (testID) => {
+    try {
+        const results = await Result.find({ testID }); // Query the database for results with the given testID
+
+        if (!results || results.length === 0) {
+            throw new Error('No results found for the given testID');
+        }
+
+        return results; // Return the results if found
+    } catch (error) {
+        console.error(`Error fetching results: ${error.message}`);
+        throw new Error(`Error fetching results: ${error.message}`);
+    }
+};
 // Delete an entire test
 export const deleteTest = async (id) => {
     try {

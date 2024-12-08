@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
-// import Chip from "@mui/material/Chip";
 import Stack from "@mui/material/Stack";
 import { Gauge } from "@mui/x-charts/Gauge";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
-import Box from "@mui/material/Box"; // Import Box for layout
+import Box from "@mui/material/Box";
+import Button from "@mui/material/Button"; // Import Button for sharing
 import { getSummary, getSessions } from "../../services/progress-service.js";
 import WeakTopicComponent from "./WeakTopicComponet.js";
 import SessionListComponent from "./SessionListComponent.js";
@@ -24,8 +24,8 @@ const Progress: React.FC = () => {
   useEffect(() => {
     const fetchSummary = async () => {
       try {
-        const summary: Summary = await getSummary(username); // Call the API
-        setSummaryResponse(summary); // Update state with API response
+        const summary: Summary = await getSummary(username);
+        setSummaryResponse(summary);
         setTimeToAns(summary.average_time_per_question || 0);
         setQuesionAttempted(summary.total_questions_answered || 0);
         setCorrectAns(summary.correct_answers || 0);
@@ -36,13 +36,13 @@ const Progress: React.FC = () => {
     };
 
     fetchSummary();
-  }, []); // Empty dependency array ensures this runs only once
+  }, []);
 
   useEffect(() => {
     const fetchSessions = async () => {
       try {
-        const sessions: Session[] = await getSessions(username); // Call the new API function
-        setSessionResponse(sessions); // Update state with session data
+        const sessions: Session[] = await getSessions(username);
+        setSessionResponse(sessions);
       } catch (error) {
         if (error instanceof Error) {
           console.error("Error fetching sessions:", error.message);
@@ -53,26 +53,63 @@ const Progress: React.FC = () => {
     };
 
     fetchSessions();
-  }, []); // Empty dependency array ensures this runs only once
+  }, []);
+
+  // Function to handle sharing
+  const handleShare = async () => {
+    if (navigator.share) {
+      try {
+        await navigator.share({
+          title: "My Progress Summary",
+          text: `Check out my progress! I answered ${quesionAttempted} questions with an accuracy of ${accuracy}%. My average time per question is ${timeToAns} seconds.`,
+          url: window.location.href,
+        });
+        console.log("Shared successfully!");
+      } catch (error) {
+        console.error("Error sharing:", error);
+      }
+    } else {
+      alert("Web Share API is not supported in your browser.");
+    }
+  };
 
   return (
-    <>
+    <Box position="relative">
+      {/* Share Button in Top-Right Corner */}
+      <Box
+        position="absolute"
+        top={16} // Distance from the top
+        right={16} // Distance from the right
+        zIndex={1} // Ensure it appears above other elements
+      >
+        <Button
+          variant="contained"
+          color="primary"
+          onClick={handleShare}
+          sx={{
+            paddingX: 2,
+            paddingY: 1,
+            fontSize: "0.875rem", // Slightly smaller font size for button
+          }}
+        >
+          Share My Progress
+        </Button>
+      </Box>
+
+      {/* Main Content */}
       <Typography variant="h3" align="center">
         Summary
       </Typography>
       <Stack spacing={2}>
-        {/* Use Box with Flexbox for row layout */}
         <Box
           display="flex"
-          flexDirection={{ xs: "column", md: "row" }} // Stack vertically on small screens, horizontally on medium+
+          flexDirection={{ xs: "column", md: "row" }}
           alignItems="center"
           justifyContent="space-between"
-          gap={2} // Add spacing between items
+          gap={2}
         >
-          {/* Gauge takes 2/3 of the row */}
           <Box flex={{ xs: "1 1 auto", md: "2" }} textAlign="center">
             <Stack alignItems="center" spacing={1}>
-              {/* Gauge for progress */}
               <Gauge
                 width={400}
                 height={200}
@@ -81,33 +118,30 @@ const Progress: React.FC = () => {
                 endAngle={90}
                 text={({ value }) => `${value}%`}
               />
-
-              {/* Message below the Gauge */}
               <Typography variant="body1" color="textSecondary">
                 {correctAns} correct out of {quesionAttempted}
               </Typography>
             </Stack>
           </Box>
 
-          {/* Card takes 1/3 of the row */}
           <Box flex={{ xs: "1 1 auto", md: "1" }}>
             <Card
               variant="outlined"
               sx={{
-                width: "fit-content", // Fits content dynamically
-                maxWidth: "100%", // Prevents overflow on smaller screens
-                minWidth: "250px", // Ensures the card has a minimum size
-                padding: 2, // Adds padding inside the card for a larger feel
+                width: "fit-content",
+                maxWidth: "100%",
+                minWidth: "250px",
+                padding: 2,
               }}
             >
               <CardContent
                 sx={{
-                  display: "flex", // Enables Flexbox
-                  flexDirection: "column", // Stacks content vertically
-                  justifyContent: "center", // Centers content vertically
-                  alignItems: "center", // Centers content horizontally
-                  height: "100%", // Ensures full height for vertical centering
-                  textAlign: "center", // Center-aligns the text itself
+                  display: "flex",
+                  flexDirection: "column",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  height: "100%",
+                  textAlign: "center",
                 }}
               >
                 <Typography variant="h6" component="div">
@@ -126,9 +160,10 @@ const Progress: React.FC = () => {
           topics_weakness={summaryResponse?.topics_weakness || []}
         />
 
+        {/* Session List */}
         <SessionListComponent sessions={sessionResponse} />
       </Stack>
-    </>
+    </Box>
   );
 };
 

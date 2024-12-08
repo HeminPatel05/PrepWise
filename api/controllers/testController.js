@@ -3,14 +3,7 @@ import * as testService from '../services/testService.js';
 
 // Get all tests
 // This function retrieves all tests from the database and returns them as a JSON response
-export const getAllTests = async (req, res) => {
-    try {
-        const tests = await testService.getAllTests();
-        res.status(200).json(tests); // Responds with status 200 and the list of tests
-    } catch (error) {
-        res.status(500).json({ error: error.message }); // Handles server errors with status 500
-    }
-};
+
 
 // Get a single test by ID
 // This function retrieves a specific test based on the provided ID from the request parameters
@@ -32,6 +25,42 @@ export const getTestById = async (req, res) => {
     }
 };
 
+
+export const getResultsByTestID = async (req, res) => {
+    try {
+        // Extract testID from the URL parameters
+        const { testID } = req.params;
+        console.log(`Fetching results for testID: ${testID}`); // Log the testID
+
+        // Call the service function to fetch results
+        const results = await testService.fetchResultsByTestID(testID);
+
+        res.status(200).json(results); // Respond with the results
+    } catch (error) {
+        console.error(`Error fetching results: ${error.message}`);
+        res.status(404).json({ error: error.message }); // Return an error if results aren't found
+    }
+};
+// async function getAllTests(req, res) {
+//     try {
+//       const tests = await testService.getAllTests();
+//       res.json(tests); // Send all tests in response
+//     } catch (err) {
+//       console.error(err);
+//       res.status(500).json({ error: 'Failed to fetch tests' });
+//     }
+//   }
+  
+//   // Controller for getting test IDs
+//   async function getTestIds(req, res) {
+//     try {
+//       const testIds = await testService.getTestIds();
+//       res.json(testIds); // Send only the IDs in response
+//     } catch (err) {
+//       console.error(err);
+//       res.status(500).json({ error: 'Failed to fetch test IDs' });
+//     }
+//   }
 
 // Create a new test
 // This function creates a new test with the provided request body data and saves it in the database
@@ -70,6 +99,29 @@ export const updateTest = async (req, res) => {
         res.status(400).json({ error: error.message }); // Handles client errors with status 400
     }
 };
+
+// Controller to fetch all tests
+export const getAllTests = async (req, res) => {
+    try {
+        const tests = await testService.fetchAllTests(); // Call the service
+        res.json(tests); // Send the response as JSON
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ error: 'Failed to fetch tests' });
+    }
+};
+
+// Controller to fetch test IDs only
+export const getTestIds = async (req, res) => {
+    try {
+        const testIds = await testService.fetchTestIds(); // Call the service
+        res.json(testIds); // Send the response as JSON
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ error: 'Failed to fetch test IDs' });
+    }
+};
+
 
 // Update a specific section of the test
 // This function updates a specific section of the test with new questions

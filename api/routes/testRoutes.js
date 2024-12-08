@@ -10,12 +10,14 @@ import {
   deleteTest,
   deleteSection,
   deleteQuestion,
+  getTestIds
 } from '../controllers/testController.js';
 
 const router = express.Router();
 
 // Routes
-router.get('/test', getAllTests); // Get all tests
+router.get('/test', getAllTests);
+router.get('/test/ids', getTestIds);
 router.get('/test/:testId', getTestById); // Get a specific test by ID
 router.post('/test', createTest); // Create a new test
 router.post('/test/:testId/submit', submitTest); // Submit the test and calculate scores (changed to PUT for consistency)
