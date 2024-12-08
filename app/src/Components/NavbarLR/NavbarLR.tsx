@@ -34,10 +34,6 @@ const Navbar: React.FC = () => {
   return (
     <div className="navbar">
       <a href="/homepage" className="navbar-logo">Prepwise</a>
-      <div className="navbar-links">
-        <a href="/dashboard">Dashboard</a>
-        <a href="/flashcards">General Words for GRE and GMAT</a>
-      </div>
       <div className="navbar-signout">
         <a href="/profile">Profile</a>
         <select id="practice-dropdown" name="dropdown" onChange={handleDropdownChange} className="practice-dropdown">
