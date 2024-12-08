@@ -90,6 +90,8 @@ const Register: React.FC = () => {
     try {
       const response = await addUser(formData);
       alert('User registered successfully!');
+      window.location.href = '/login';  
+      
       console.log(response.data);
     } catch (error) {
       console.error('Registration failed:', error);
