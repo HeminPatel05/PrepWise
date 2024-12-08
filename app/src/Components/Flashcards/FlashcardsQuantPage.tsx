@@ -24,7 +24,7 @@ const FlashcardQuantPage: React.FC = () => {
 
   return (
     <>
-      <Navbar />
+      
       <div className="flashcards-container">
         <h1>Quant Practice Sections</h1>
         {sections.map((section, index) => (

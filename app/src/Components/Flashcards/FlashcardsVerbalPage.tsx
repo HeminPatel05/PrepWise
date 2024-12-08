@@ -24,7 +24,7 @@ const FlashcardVerbalPage: React.FC = () => {
 
   return (
     <>
-      <Navbar />
+      
       <div className="flashcards-container">
         <h1>Verbal Practice Sections</h1>
         {sections.map((section, index) => (

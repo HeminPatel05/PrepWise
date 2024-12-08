@@ -168,7 +168,7 @@ const Flashcards: React.FC = () => {
 
   return (
     <>
-      <Navbar />
+      {/* <Navbar /> */}
       <div className="container">
         <div className="content">
           <div className="quiz-section">
