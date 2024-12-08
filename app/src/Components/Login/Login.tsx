@@ -1,8 +1,10 @@
-import React, { useState, ChangeEvent, FormEvent } from 'react';
-import { TextField, Button, Box, Typography } from '@mui/material';
-import { useNavigate } from 'react-router-dom';
-import { loginUser } from '../../services/api'; // Ensure the API service is correctly set up
-import './Login.css';
+import React, { useState, ChangeEvent, FormEvent } from "react";
+import { TextField, Button, Box, Typography } from "@mui/material";
+import { useNavigate } from "react-router-dom";
+import { loginUser } from "../../services/api"; // Ensure the API service is correctly set up
+import "./Login.css";
+import { setUser } from "../../services/userSlice"; // Import Redux action
+import { useAppDispatch } from "../../services/hooks"; // Import custom typed hooks
 
 interface Credentials {
   email: string;
@@ -11,11 +13,12 @@ interface Credentials {
 
 const Login: React.FC = () => {
   const [credentials, setCredentials] = useState<Credentials>({
-    email: '',
-    password: '',
+    email: "",
+    password: "",
   });
-  const [error, setError] = useState<string>(''); // Error message state
+  const [error, setError] = useState<string>(""); // Error message state
   const navigate = useNavigate(); // React Router hook for navigation
+  const dispatch = useAppDispatch(); // Redux dispatch hook
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>): void => {
     const { name, value } = e.target;
@@ -24,32 +27,43 @@ const Login: React.FC = () => {
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>): Promise<void> => {
     e.preventDefault();
-    setError(''); // Reset error state before submission
+    setError(""); // Reset error state before submission
 
     try {
       const response = await loginUser(credentials); // Call login API
-      const { token } = response.data; // Extract token from API response
+      const { token, user } = response.data; // Extract token and user data from API response
 
-      if (token) {
-        localStorage.setItem('authToken', token); // Save token for authentication
-        alert('Login successful!');
-        navigate('/dashboard'); // Redirect to dashboard
+      if (token && user) {
+        // Save token in localStorage for authentication
+        localStorage.setItem("authToken", token);
+
+        // Dispatch user data to Redux store
+        dispatch(
+          setUser({
+            id: user.id,
+            email: user.email,
+            firstName: user.firstName,
+            token,
+          })
+        );
+
+        navigate("/homepage"); // Redirect to dashboard
       } else {
-        setError('Unexpected error. Please try again.'); // Handle unexpected cases
+        setError("Unexpected error. Please try again."); // Handle unexpected cases
       }
     } catch (err: any) {
       // Handle error response
       if (err.response && err.response.status === 400) {
-        setError(err.response.data.message || 'Invalid email or password');
+        setError(err.response.data.message || "Invalid email or password");
       } else {
-        setError('Something went wrong. Please try again later.');
+        setError("Something went wrong. Please try again later.");
       }
-      console.error('Login error:', err);
+      console.error("Login error:", err);
     }
   };
 
   const handleRegisterRedirect = (): void => {
-    navigate('/register'); // Redirect to Register page
+    navigate("/register"); // Redirect to Register page
   };
 
   return (
@@ -90,14 +104,18 @@ const Login: React.FC = () => {
           variant="contained"
           color="primary"
           fullWidth
-          style={{ marginTop: '1rem' }}
+          style={{ marginTop: "1rem" }}
         >
           Login
         </Button>
 
         {/* Register Redirect */}
-        <Typography variant="body2" className="register-link" style={{ marginTop: '1rem' }}>
-          Not signed in yet?{' '}
+        <Typography
+          variant="body2"
+          className="register-link"
+          style={{ marginTop: "1rem" }}
+        >
+          Not signed in yet?{" "}
           <span onClick={handleRegisterRedirect} className="register-link-text">
             Register here
           </span>
