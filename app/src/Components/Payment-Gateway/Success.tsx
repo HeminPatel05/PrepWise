@@ -34,9 +34,9 @@ const Success = () => {
         <p>Your premium features are now activated. Start exploring now!</p>
         <button
           className="success-button"
-          onClick={() => (window.location.href = "/dashboard")}
+          onClick={() => (window.location.href = "/progress")}
         >
-          Go to Dashboard
+          View Your Progress
         </button>
       </div>
     </div>
