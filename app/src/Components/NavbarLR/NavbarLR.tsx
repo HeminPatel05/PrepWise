@@ -35,7 +35,7 @@ const Navbar: React.FC = () => {
     <div className="navbar">
       <a href="/homepage" className="navbar-logo">Prepwise</a>
       <div className="navbar-signout">
-        <a href="/tests">Tests</a>
+        <a href="/test">Tests</a>
         <select id="practice-dropdown" name="dropdown" onChange={handleDropdownChange} className="practice-dropdown">
           <option value="" disabled selected>Practice</option>
           <option value="/flashcards-verbal">Verbal</option>

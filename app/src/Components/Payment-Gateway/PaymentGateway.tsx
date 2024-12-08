@@ -3,7 +3,7 @@ import "./PaymentGateway.css";
 import { makePayment } from "../../services/payment-service";
 import { useAppSelector } from "../../services/hooks"; // Import custom typed hook
 import { useSelector } from "react-redux";
-import { RootState } from "../../services/store";
+import { RootState } from "../../services/store1";
 
 const PaymentGateway: React.FC = () => {
   const customerEmail = useAppSelector((state) => state.user.email);

@@ -21,3 +21,4 @@ export const persistor = persistStore(store); // Create persistor instance
 // Define RootState and AppDispatch types
 export type RootState = ReturnType<typeof store.getState>;
 export type AppDispatch = typeof store.dispatch;
+z

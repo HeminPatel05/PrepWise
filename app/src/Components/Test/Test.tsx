@@ -21,7 +21,7 @@ import TestResult from './TestResult';
 import { useParams } from 'react-router-dom';
 import './Test.css';
 import { useDispatch, useSelector } from 'react-redux';
-import { RootState } from '../Test/redux/store'; 
+import { RootState } from '../Test/redux/shop'; 
 interface SectionTimes {
   Quant: number;
   Verbal: number;
@@ -30,7 +30,7 @@ interface SectionTimes {
 const Test: React.FC = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const currentTestIndex = useSelector((state: RootState) => state.test.currentTestIndex);
+  //const currentTestIndex = useSelector((state: RootState) => state.test.currentTestIndex);
 
   const { id } = useParams<{ id: string }>();
   const [test, setTest] = useState<any>(null);
@@ -59,16 +59,16 @@ const Test: React.FC = () => {
   useEffect(() => {
     const fetchTest = async () => {
       try {
-        if (currentTestIndex === null) {
-          throw new Error('Test index is not set');
-        }
+        // if (currentTestIndex === null) {
+        //   throw new Error('Test index is not set');
+        // }
 
-        const selectedTestId = allTestIds[currentTestIndex];
-        if (!selectedTestId) {
-          throw new Error('Test ID is not available');
-        }
+        // const selectedTestId = allTestIds[currentTestIndex];
+        // if (!selectedTestId) {
+        //   throw new Error('Test ID is not available');
+        // }
 
-        const response = await fetch(`http://localhost:3000/test/${selectedTestId}`);
+        const response = await fetch(`http://localhost:3000/test/67551410abc3834aaaf149d7`);
         if (!response.ok) throw new Error('Failed to fetch test');
 
         const data = await response.json();
@@ -83,7 +83,7 @@ const Test: React.FC = () => {
     if (allTestIds.length > 0) {
       fetchTest();
     }
-  }, [currentTestIndex, allTestIds]);
+  }, [ allTestIds]);
 
   useEffect(() => {
     const submitTest = async () => {
@@ -93,24 +93,24 @@ const Test: React.FC = () => {
         }
   
         // Ensure the test ID is valid
-        if (currentTestIndex === null) {
-          throw new Error('Test index is not set');
-        }
+        // if (currentTestIndex === null) {
+        //   throw new Error('Test index is not set');
+        // }
   
-        const selectedTestId = allTestIds[currentTestIndex];
-        if (!selectedTestId) {
-          throw new Error('Test ID is not available');
-        }
+        //const selectedTestId = allTestIds[currentTestIndex];
+        // if (!selectedTestId) {
+        //   throw new Error('Test ID is not available');
+        // }
   
         // Prepare the payload to send to the server
         const payload = {
-          testId: selectedTestId,
+          //testId: selectedTestId,
           answers: answers,
           completedAt: new Date().toISOString(), // Optional: timestamp when the test is submitted
         };
   
         // Send the answers to the server
-        const response = await fetch(`http://localhost:3000/test/${allTestIds[currentTestIndex]}/submit`, {
+        const response = await fetch(`http://localhost:3000/test/67551410abc3834aaaf149d7/submit`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -136,7 +136,7 @@ const Test: React.FC = () => {
     if (submitted) {
       submitTest(); // Submit the test if it's marked as submitted
     }
-  }, [submitted, answers, currentTestIndex, allTestIds]);
+  }, [submitted, answers,  allTestIds]);
   
   useEffect(() => {
     if (test && !submitted) {
@@ -175,7 +175,7 @@ const Test: React.FC = () => {
       if (allTestIds.length === 0) throw new Error('No test IDs available');
       const selectedTestId = allTestIds[testIndex];
       navigate(`/test/${selectedTestId}`); // Use React Router navigation
-      const response = await fetch(`http://localhost:3000/test/${selectedTestId}`);
+      const response = await fetch(`http://localhost:3000/test/67551410abc3834aaaf149d7`);
       if (!response.ok) throw new Error('Failed to fetch selected test');
   
       const data = await response.json();
@@ -220,7 +220,7 @@ const Test: React.FC = () => {
       if (allTestIds.length === 0) throw new Error('Test IDs not available yet');
       if (currentTestIndex < 0 || currentTestIndex >= allTestIds.length) throw new Error('Invalid current test index');
   
-      const response = await fetch(`http://localhost:3000/test/${allTestIds[currentTestIndex]}`);
+      const response = await fetch(`http://localhost:3000/test/67551410abc3834aaaf149d7`);
       if (!response.ok) throw new Error('Failed to fetch test');
   
       const data = await response.json();
@@ -255,19 +255,19 @@ const Test: React.FC = () => {
 
   const handleSubmit = async () => {
     try {
-      if (currentTestIndex === null || allTestIds.length === 0) {
-        throw new Error('Test index or test IDs are not set');
-      }
+      // if (currentTestIndex === null || allTestIds.length === 0) {
+      //   throw new Error('Test index or test IDs are not set');
+      // }
   
-      const selectedTestId = allTestIds[currentTestIndex];
-      if (!selectedTestId) {
-        throw new Error('Selected Test ID is not valid');
-      }
+      //const selectedTestId = allTestIds[currentTestIndex];
+      // if (!selectedTestId) {
+      //   throw new Error('Selected Test ID is not valid');
+      // }
   
       const finalAnswers = answers;
   
       // API call using currentTestIndex to dynamically fetch the test ID
-      const response = await fetch(`http://localhost:3000/test/${selectedTestId}/submit`, {
+      const response = await fetch(`http://localhost:3000/test/67551410abc3834aaaf149d7/submit`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
