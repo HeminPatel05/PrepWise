@@ -4,8 +4,8 @@ import storage from "redux-persist/lib/storage"; // Default storage is localStor
 import userReducer from "./userSlice";
 
 const persistConfig = {
-  key: "root", // Key for persisted state in localStorage
-  storage, // Use localStorage as the storage engine
+  key: "root",
+  storage,
 };
 
 const persistedReducer = persistReducer(persistConfig, userReducer);
