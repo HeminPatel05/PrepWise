@@ -1,4 +1,4 @@
-[![Review Assignment Due Date](https://classroom.github.com/assets/deadline-readme-button-22041afd0340ce965d47ae6ef1cefeee28c7c493a6346c4f15d667ab976d596c.svg)](https://classroom.github.com/a/DIHvCS29)
+
 
 ## Prepwise: GRE Preparation Platform
 
@@ -196,5 +196,3 @@ classDiagram
     Test --> Progress
 
 ```
-
-Video Link - https://northeastern.sharepoint.com/:v:/s/INFO6150424/ERmJQEhEmz5Khc1p3g0HdM4BTr22LNaR5qY-EzA97JC1MA
